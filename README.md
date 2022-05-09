@@ -11,7 +11,7 @@ This repository is intended to document and inform about the steps required to c
 
 <h2 id="compile">Compiling from Source</h2>
 
-**Step 1:** Clone, build dependencies:
+**Step 1: Clone, build dependencies:**
 
 ```
 cd ~
@@ -22,7 +22,7 @@ make -j4
 
 Wait for `depends` to finish building.
 
-**Step 2:** Configure build enviroment, and build from source:
+**Step 2: Configure build enviroment, and build from source:**
 
 ```
 cd ~/verus
@@ -33,7 +33,7 @@ make -j4
 
 If all steps completed successfully, you should have resulting binaries located in `~/verus/src`.
 
-**Step 3:** Launch Verus daemon
+**Step 3: Launch Verus daemon**
 
 ```
 # Create a new tmux session
@@ -61,7 +61,7 @@ Fill in equivalent values for your wallet, desired mining process limits, etc.  
 
 *You must have at least 100 VRSCTEST in your wallet to generate a primary ID on the Verus testnet*
 
-**Step 1:** Register name commitment 
+**Step 1: Register name commitment** 
 
 ```
 ./verus -chain=vrsctest registernamecommitment "chipstest0" "RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph"
@@ -85,7 +85,7 @@ If successful, output should show similar to the following:
 }
 ```
 
-**Step 2:** Register identity
+**Step 2: Register identity**
 
 Copy and paste the entire resulting JSON object into a `registeridentity` command, issued to `verus` client, and append desired identity specifications:
 
@@ -117,19 +117,15 @@ f2e5b040dd18ce691e47de60cf9cc5d867769b5d09d25b6a7ae2ea9e0fa71059
 ```
 Wait for this transaction to be confirmed.
 
-**Step 3:** Verify identity has been created
+**Step 3: Verify identity has been created**
 
 Identities can be located by name, or by i-address:
 
-By name:
-
 ```
+# By name
 ./verus -chain=vrsctest getidentity "chipstest0@"
-```
 
-By i-address:
-
-```
+# By i-address
 ./verus -chain=vrsctest getidentity iE4YCiJTGnYZdHBkDbzPka3GsNPoAXmoTA
 ```
 
