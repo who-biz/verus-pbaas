@@ -33,6 +33,28 @@ make -j4
 
 If all steps completed successfully, you should have resulting binaries located in `~/verus/src`.
 
+**Step 3:** Launch Verus daemon
+
+```
+# Create a new tmux session
+tmux new -s vrsctest
+
+# Launch vrsctest chain
+cd ~/verus/src
+./verusd -chain=vrsctest &
+
+# Detaching from tmux session can be done with Ctrl+B, then D
+
+```
+
+If you wish to mine/stake, you can launch with following options:
+
+```
+./verusd -chain=vrsctest -gen -genproclimit=2 -mineraddress=RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph -mint &
+```
+
+Fill in equivalent values for your wallet, desired mining process limits, etc.  When you need to re-attach to your `tmux` session, you can do so with: `tmux a -t vrsctest`.
+
 ---
 
 <h2 id="idgen">Generate an ID for use on Verus Testnet</h2>
