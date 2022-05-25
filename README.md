@@ -258,6 +258,138 @@ fe8ac7c7b3c543ff82becba1a27efd244690dfa7bb737946a31cd953dfcd3bd6
 If successful, output should show similar to the following:
 
 ```
+{
+  "version": 1,
+  "options": 264,
+  "name": "CHIPSTEST2",
+  "currencyid": "iHjThi6GKjyp6QC7wjewHN7LaQ1DQxXe1i",
+  "parent": "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq",
+  "systemid": "iHjThi6GKjyp6QC7wjewHN7LaQ1DQxXe1i",
+  "notarizationprotocol": 1,
+  "proofprotocol": 1,
+  "launchsystemid": "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq",
+  "startblock": 32248,
+  "endblock": 0,
+  "currencies": [
+    "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq"
+  ],
+  "conversions": [
+    1.00000000
+  ],
+  "maxpreconversion": [
+    0.00000000
+  ],
+  "preallocations": [
+    {
+      "iGTdav42siHgX96ybWn3pRTFxQgiUpZ9K9": 10000000.00000000
+    },
+    {
+      "iCu8oPVnPvLmbiNSDx3tRSRGumEtFV69FJ": 10000000.00000000
+    }
+  ],
+  "initialcontributions": [
+    0.00000000
+  ],
+  "gatewayconverterissuance": 1000000.00000000,
+  "idregistrationfees": 100.00000000,
+  "idreferrallevels": 3,
+  "idimportfees": 1.00000000,
+  "notaries": [
+    "iSGKbfsLYUXuf6J8NaETLyNT7xFyCNKcQY",
+    "iCDovahDV4pT3WoLe18DbA325edTfxmwRq",
+    "iN3gLWmAxczjxSLXfpRLRKA7rzE5X4LnzK"
+  ],
+  "minnotariesconfirm": 2,
+  "currencyregistrationfee": 200.00000000,
+  "pbaassystemregistrationfee": 10000.00000000,
+  "currencyimportfee": 100.00000000,
+  "transactionimportfee": 0.01000000,
+  "transactionexportfee": 0.01000000,
+  "gatewayconverterid": "i5XzLJ2zimjo2AHTEVEs4LNbQdX1wxkiqd",
+  "gatewayconvertername": "Cashier",
+  "initialtarget": "000001e1e1000000000000000000000000000000000000000000000000000000",
+  "eras": [
+    {
+      "reward": 0,
+      "decay": 0,
+      "halving": 0,
+      "eraend": 0
+    }
+  ],
+  "currencyidhex": "56323ff957f74ef3976ca2416cb70851e8e2649c",
+  "fullyqualifiedname": "CHIPSTEST2",
+  "currencynames": {
+    "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq": "vrsctest"
+  },
+  "definitiontxid": "fe8ac7c7b3c543ff82becba1a27efd244690dfa7bb737946a31cd953dfcd3bd6",
+  "definitiontxout": 1,
+  "bestheight": 32236,
+  "lastconfirmedheight": 32236,
+  "bestcurrencystate": {
+    "flags": 2,
+    "version": 1,
+    "currencyid": "iHjThi6GKjyp6QC7wjewHN7LaQ1DQxXe1i",
+    "launchcurrencies": [
+      {
+        "currencyid": "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq",
+        "weight": 0.00000000,
+        "reserves": 1.00000000,
+        "priceinreserve": 1.00000000
+      }
+    ],
+    "initialsupply": 0.00000000,
+    "emitted": 0.00000000,
+    "supply": 21000000.00000000,
+    "currencies": {
+      "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq": {
+        "reservein": 0.00000000,
+        "primarycurrencyin": 0.00000000,
+        "reserveout": 0.00000000,
+        "lastconversionprice": 1.00000000,
+        "viaconversionprice": 0.00000000,
+        "fees": 0.00000000,
+        "conversionfees": 0.00000000,
+        "priorweights": 0.00000000
+      }
+    },
+    "primarycurrencyfees": 0.00000000,
+    "primarycurrencyconversionfees": 0.00000000,
+    "primarycurrencyout": 0.00000000,
+    "preconvertedout": 0.00000000
+  },
+  "lastconfirmedcurrencystate": {
+    "flags": 2,
+    "version": 1,
+    "currencyid": "iHjThi6GKjyp6QC7wjewHN7LaQ1DQxXe1i",
+    "launchcurrencies": [
+      {
+        "currencyid": "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq",
+        "weight": 0.00000000,
+        "reserves": 1.00000000,
+        "priceinreserve": 1.00000000
+      }
+    ],
+    "initialsupply": 0.00000000,
+    "emitted": 0.00000000,
+    "supply": 21000000.00000000,
+    "currencies": {
+      "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq": {
+        "reservein": 0.00000000,
+        "primarycurrencyin": 0.00000000,
+        "reserveout": 0.00000000,
+        "lastconversionprice": 1.00000000,
+        "viaconversionprice": 0.00000000,
+        "fees": 0.00000000,
+        "conversionfees": 0.00000000,
+        "priorweights": 0.00000000
+      }
+    },
+    "primarycurrencyfees": 0.00000000,
+    "primarycurrencyconversionfees": 0.00000000,
+    "primarycurrencyout": 0.00000000,
+    "preconvertedout": 0.00000000
+  }
+}
 ```
 
 
