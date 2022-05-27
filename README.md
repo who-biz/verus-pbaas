@@ -422,7 +422,7 @@ Next, we must spin up our `chipstest2` daemon, and start mining.  We can either:
 ./verus -chain=chipstest2 getaddressesbyaccount ""
 
 # option b.) import WIF
-./verus -chain=chipstest2 importprivatekey <WIF here>
+./verus -chain=chipstest2 importprivkey <WIF here>
 ```
 
 Once we've fetched our new address, or imported a known address, we can restart our `chipstest2` daemon to begin merge mining with parent `vrsctest`:
