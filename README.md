@@ -7,12 +7,14 @@ This repository is intended to document and inform about the steps required to c
 - [Compiling from source](#compile)
 - [Generating an ID for use on Verus Testnet](#idgen)
 - [Launching a PBaaS chain](#chaingen)
-
+  - [Funding identity](#chaingen-fund)
+  - [Defining a currency](#chaingen-define)
+  - [Verifying currency generation](#chaingen-verify)
 ---
 
 <h2 id="compile">Compiling from Source</h2>
 
-**Step 1: Clone, build dependencies:**
+<h3>Step 1: Clone, build dependencies:</h3>
 
 ```
 cd ~
@@ -23,7 +25,7 @@ make -j4
 
 Wait for `depends` to finish building.
 
-**Step 2: Configure build enviroment, and build from source:**
+<h3>Step 2: Configure build enviroment, and build from source:</h3>
 
 ```
 cd ~/verus
@@ -34,7 +36,7 @@ make -j4
 
 If all steps completed successfully, you should have resulting binaries located in `~/verus/src`.
 
-**Step 3: Launch Verus daemon**
+<h3>Step 3: Launch Verus daemon</h3>
 
 ```
 # Create a new tmux session
@@ -62,7 +64,7 @@ Fill in equivalent values for your wallet, desired mining process limits, etc.  
 
 *You must have at least 100 VRSCTEST in your wallet to generate a primary ID on the Verus testnet*
 
-**Step 1: Register name commitment** 
+<h3>Step 1: Register name commitment</h3> 
 
 ```
 ./verus -chain=vrsctest registernamecommitment chipstest2 RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph
@@ -86,7 +88,7 @@ If successful, output should show similar to the following:
 }
 ```
 
-**Step 2: Register identity**
+<h3>Step 2: Register identity</h3>
 
 Copy and paste the entire resulting JSON object into a `registeridentity` command, issued to `verus` client, and append desired identity specifications:
 
@@ -119,7 +121,7 @@ beaff25a7ae6c616828c6e62d752fe51d570a6463274d3d3fc89ba6f17112a4d
 
 Wait for this transaction to be confirmed.
 
-**Step 3: Verify identity has been created**
+<h3>Step 3: Verify identity has been created</h3>
 
 Identities can be located by name, or by i-address:
 
@@ -165,7 +167,7 @@ If successful, output should show similar to the following:
 
 <h2 id="chaingen">Launching a PBaaS Chain</h2>
 
-**Step 1: Send VRSCTEST, and Basket currencies to identity address**
+<h3 id="chaingen-fund">Step 1: Send VRSCTEST, and Basket currencies to identity address</h3>
 
 To launch a PBaaS chain, you will need *at least* a 10,200 VRSCTEST balance in the address registered to your newly generated identity.  Once again, we can send to either the identity's canonical name, or the i-address associated with it.
 
@@ -229,7 +231,7 @@ We also want to verify that the resulting operation ids for `btc` and `nexus` we
 ]
 ```
 
-**Step 2: Define a currency with desired parameters**
+<h3 id="chaingen-define">Step 2: Define a currency with desired parameters</h3>
 
 ```
 ./verus -chain=vrsctest definecurrency '{"name":"CHIPSTEST2","options":264,"currencies":["vrsctest"],"maxpreconversion":[0], "conversions":[1],"eras":[{"reward":0,"decay":0,"halving":0,"eraend":0}],"notaries":["Notary1@","Notary2@","Notary3@"],"minnotariesconfirm":2,"nodes":[{"networkaddress":"51.222.159.244:12121"},{"networkaddress":"149.56.13.160:12121"}],"preallocations":[{"biz@":10000000},{"allbits@":10000000}], "gatewayconvertername":"Cashier", "gatewayconverterissuance":1000000}' '{"currencies":["vrsctest","nexus","BTC","chipstest2"],"initialcontributions":[1000,2300,1.9,0],"initialsupply":4000}'
@@ -238,7 +240,7 @@ We also want to verify that the resulting operation ids for `btc` and `nexus` we
 If successful, you should see a very large JSON output in your terminal.  This command does not finish the process of defining a currency.  It simply constructs a transaction, and does not send it to network.
 
 
-**Step 3: Send resulting raw transaction to network**
+<h3>Step 3: Send resulting raw transaction to network</h3>
 
 Copy and paste the `"hex"` value from JSON output into `sendrawtransaction`
 
@@ -249,7 +251,7 @@ Copy and paste the `"hex"` value from JSON output into `sendrawtransaction`
 fe8ac7c7b3c543ff82becba1a27efd244690dfa7bb737946a31cd953dfcd3bd6
 ```
 
-**Step 4: Verify currency generation was succesful**
+<h3 id="chaingen-verify">Step 4: Verify currency generation was succesful</h3>
 
 ```
 ./verus -chain=vrsctest getcurrency chipstest2
