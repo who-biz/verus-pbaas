@@ -6,10 +6,12 @@ This repository is intended to document and inform about the steps required to c
 
 - [Compiling from source](#compile)
 - [Generating an ID for use on Verus Testnet](#idgen)
-- [Launching a PBaaS chain](#chaingen)
+- [Generating a PBaaS chain](#chaingen)
   - [Funding identity](#chaingen-fund)
   - [Defining a currency](#chaingen-define)
   - [Verifying currency generation](#chaingen-verify)
+- [Launching a PBaaS Chain](#launch)
+
 ---
 
 <h2 id="compile">Compiling from Source</h2>
@@ -165,15 +167,15 @@ If successful, output should show similar to the following:
 
 ---
 
-<h2 id="chaingen">Launching a PBaaS Chain</h2>
+<h2 id="chaingen">Generating a PBaaS Chain</h2>
 
 <h3 id="chaingen-fund">Step 1: Send VRSCTEST, and Basket currencies to identity address</h3>
 
-To launch a PBaaS chain, you will need *at least* a 10,200 VRSCTEST balance in the address registered to your newly generated identity.  Once again, we can send to either the identity's canonical name, or the i-address associated with it.
+To generate a PBaaS chain, you will need *at least* a 10,200 VRSCTEST balance in the address registered to your newly generated identity.  Once again, we can send to either the identity's canonical name, or the i-address associated with it.
 
 10,200 VRSCTEST is a base cost (covering 200 VRSCTEST `currencyregistrationfee`, and 10k VRSCTEST `pbaassystemregistrationfee`).  Additional registration costs may be necessary, depending on currency definition specifics.
 
-For this chain, we will be launching both a PBaaS chain (`chipstest2@`), and a gatewayconverter chain (`Cashier.chipstest2`).  We will be initially contributing a basket of currencies to the gateway converter.  In example below, we are sending `15000 VRSCTEST`, `2 BTC`, and `2400 nexus` to fund the basket.
+For this chain, we will be generating both a PBaaS chain (`chipstest2@`), and a gatewayconverter chain (`Cashier.chipstest2`).  We will be initially contributing a basket of currencies to the gateway converter.  In example below, we are sending `15000 VRSCTEST`, `2 BTC`, and `2400 nexus` to fund the basket.
 
 ```
 # send vrsctest
@@ -393,5 +395,58 @@ If successful, output should show similar to the following:
   }
 }
 ```
+
+---
+
+<h2 id="launch">Launching a PBaaS chain</h4>
+
+<h3 id="launch-firstblock">Merge mine the first block on generated chain</h3>
+
+Now that we have defined our chain's currency, generated and committed the launch parameters...  we need to merge mine at least the first block in conjunction with the launch system chain.
+
+Only the first block must be merge mined.  Afterward, we can choose to merge mine or mine the newly launched chain independently.
+
+To do this, we must be already mining on `VRSCTEST` in our example.  This can be performed with the following startup options (for solo mining):
+
+```
+./verusd -chain=vrsctest -gen -genproclimit=2 -mineraddress=RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph -mint &
+```
+
+Next, we must spin up our `chipstest2` daemon, and start mining.  We can either: a.) fetch the address generated on wallet initialization, or b.) import our WIF private key from `vrsctest` chain.
+
+```
+# Start chipstest2 daemon
+./verusd -chain=chipstest2 &
+
+# option a.) Fetch address generated on init
+./verus -chain=chipstest2 getaddressesbyaccount ""
+
+# option b.) import WIF
+./verus -chain=chipstest2 importprivatekey <WIF here>
+```
+
+Once we've fetched our new address, or imported a known address, we can restart our `chipstest2` daemon to begin merge mining with parent `vrsctest`:
+
+```
+# Stop chipstest2 daemon
+./verus -chain=chipstest2 stop
+
+# Restart with mining options
+./verusd -chain=chipstest2 -gen -genproclimit=2 -mineraddress=RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph -mint &
+```
+
+If successful, you should see output in your terminal:
+
+```
+Merge mining chipstest2 with vrsctest as the hashing chain
+Found block 2885
+staking reward 0.00010000 chipstest2!
+POS hash: 00000000007fca5a2624d9276d2ddd7074f68fd32b9f6c81904d96b4a12f6301
+target:   0000000002e3ae00000000000000000000000000000000000000000000000000
+
+Block 2885 added to chain
+```
+
+Similar messages should be seen in `vrsctest` daemon output.  Once the first block is mined, running `vrsctest` daemon at the same time is optional.
 
 
