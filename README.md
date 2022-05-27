@@ -7,6 +7,7 @@ This repository is intended to document and inform about the steps required to c
 - [Compiling from source](#compile)
 - [Generating an ID for use on Verus Testnet](#idgen)
 - [Generating a PBaaS chain](#chaingen)
+  - [Conceptual description of chosen `definecurrency` options](#chaingen-concept)
   - [Funding identity](#chaingen-fund)
   - [Defining a currency](#chaingen-define)
   - [Verifying currency generation](#chaingen-verify)
@@ -168,6 +169,79 @@ If successful, output should show similar to the following:
 ---
 
 <h2 id="chaingen">Generating a PBaaS Chain</h2>
+
+<h3 id="chaingen-concept">Conceptual description of chosen `definecurrency` options</h3>
+
+In [step 2, we will issue a `definecurrency` command to vrsctest daemon](#chaingen-define), which includes selected options tailored to CHIPS unique case and blockchain history.  It is important to understand both why these options were chosen and what they do.
+
+<h4>Background on CHIPS blockchain</h4>
+
+CHIPS is a coin that has already reached maximum total supply.  In its present form, mining is largely altruistic since block rewards have reduced to zero, and transactions are quite infrequent (miners not being paid by fees).  Price discovery has not occurred, and we want to ensure it takes place using Verus's PBaaS tooling.  We want existing holders of CHIPS to retain their coins while migrating to a new PBaaS chain, and to provide some backing in basket currencies for price discovery via a gateway converter.
+
+Verus's fee market presents a unique opportunity for a coin that has already reached its max supply and will emit no new coins.  Actions taken by users via id generation, cross-chain conversions, and more, will provide greater block rewards to miners.  Combined with merge mining capabilities on Verus, this is a big improvement in theoretical security model for CHIPS.
+
+The options below will generate a `chipstest2` blockchain, as well as a gateway converter `Cashier.chipstest2`.
+
+<h4>`definecurrency` options for `chipstest2` and justifications</h4>
+
+- `"name":"CHIPSTEST2"`
+
+Name for our generated chain
+
+- `"options": 264`
+
+Defines our chain as a PBaaS chain, with `OPTION_PBAAS: 0x100 = 256`, and `OPTION_ID_REFERRALS: 8`
+
+- `"currencies":["vrsctest"]`
+
+Defines our chain as being based on existing `vrsctest` currency
+
+- `"maxpreconversion":[0]`
+
+Prevents users of `vrsctest` blockchain from preconverting `vrsctest` to `chipstest2` in during pre-launch period.  If we wanted to accept pre-launch conversions, we could set `minpreconversion` and `maxpreconversion` to specify required preconversion amounts for launch to proceed.
+
+- `"conversions":[1]`
+
+Specifies the desired conversion ratio for `vrsctest` to `chipstest`
+
+- `"eras"`
+
+Describes reward schedule on new `chipstest2` chain.  We want block subsidies to be zero, so that all emission comes from gateway converter.  Any additional issuance beyond that will be supply-neutral.
+
+- `"notaries":["Notary1@","Notary2@","Notary3@"]
+
+These notaries will be responsible for notarizing from `chipstest2` to `vrsctest` and vice versa.  These are required for cross-chain interaction.  Specified notaries here belong to identities owned by Verus foundation.
+
+- `"nodes":[{...},{...}]`
+
+Seed nodes for new PBaaS chain
+
+- `"preallocations":[{"biz@":10000000},{"allbits@":10000000}]`
+
+Pre-allocated amount from supply of new chain.  In this example, we are pre-allocating 20 million `chipstest2` coins to identities `biz@` and `allbits@` in equal amounts.  These could then be re-allocated based on snapshot from legacy CHIPS codebase.
+
+<h4>`definecurrency` options for gateway converter</h4>
+
+- `"gatewayconvertername":"Cashier"`
+
+Defines a separate blockchain for gateway conversions named `Cashier.chipstest2`
+
+- `"gatewayconverterissuance":1000000`
+
+Specifies that our final 1 million `chipstest2` supply will be issued through the gateway converter, for a max supply of 21 million coins.
+
+- `"currencies":["vrsctest","nexus","BTC","chipstest2"]`
+
+Specifies a basket of currencies backing our gateway issuance.
+
+- `"initialcontributions":[1000,2300,1.9,0]`
+
+Specifies amounts of backing currencies to contribute on launch of gateway from our `chipstest2@` identity address.
+
+- `"initialsupply":4000`
+
+1:1 backing against `vrsctest` amount of 1000 in a basket of 4 currencies
+
 
 <h3 id="chaingen-fund">Step 1: Send VRSCTEST, and Basket currencies to identity address</h3>
 
