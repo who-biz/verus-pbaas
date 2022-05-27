@@ -8,6 +8,9 @@ This repository is intended to document and inform about the steps required to c
 - [Generating an ID for use on Verus Testnet](#idgen)
 - [Generating a PBaaS chain](#chaingen)
   - [Conceptual description of chosen `definecurrency` options](#chaingen-concept)
+    - [Background on CHIPS](#background)
+    - [Itemized options for chipstest2](#options-chipstest2)
+    - [Itemized options for gateway converter](#options-gateway)
   - [Funding identity](#chaingen-fund)
   - [Defining a currency](#chaingen-define)
   - [Verifying currency generation](#chaingen-verify)
@@ -174,7 +177,7 @@ If successful, output should show similar to the following:
 
 In [step 2, we will issue a `definecurrency` command to vrsctest daemon](#chaingen-define), which includes selected options tailored to CHIPS unique case and blockchain history.  It is important to understand both why these options were chosen and what they do.
 
-<h4>Background on CHIPS blockchain</h4>
+<h4 id="background">Background on CHIPS blockchain</h4>
 
 CHIPS is a coin that has already reached maximum total supply.  In its present form, mining is largely altruistic since block rewards have reduced to zero, and transactions are quite infrequent (miners not being paid by fees).  Price discovery has not occurred, and we want to ensure it takes place using Verus's PBaaS tooling.  We want existing holders of CHIPS to retain their coins while migrating to a new PBaaS chain, and to provide some backing in basket currencies for price discovery via a gateway converter.
 
@@ -182,7 +185,7 @@ Verus's fee market presents a unique opportunity for a coin that has already rea
 
 The options below will generate a `chipstest2` blockchain, as well as a gateway converter `Cashier.chipstest2`.
 
-<h4>`definecurrency` options for `chipstest2` and justifications</h4>
+<h4 id="options-chipstest2">`definecurrency` options for `chipstest2` and justifications</h4>
 
 - `"name":"CHIPSTEST2"`
 
@@ -220,7 +223,7 @@ Seed nodes for new PBaaS chain
 
 Pre-allocated amount from supply of new chain.  In this example, we are pre-allocating 20 million `chipstest2` coins to identities `biz@` and `allbits@` in equal amounts.  These could then be re-allocated based on snapshot from legacy CHIPS codebase.
 
-<h4>`definecurrency` options for gateway converter</h4>
+<h4 id="options-gateway">`definecurrency` options for gateway converter</h4>
 
 - `"gatewayconvertername":"Cashier"`
 
