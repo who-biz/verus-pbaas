@@ -324,13 +324,13 @@ If successful, output should show similar to the following:
   "version": 1,
   "options": 264,
   "name": "chipstensec",
-  "currencyid": "iHjThi6GKjyp6QC7wjewHN7LaQ1DQxXe1i",
+  "currencyid": "iKRtCZT87icurxb1ECUHKBq4jcuCTUV4ty",
   "parent": "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq",
-  "systemid": "iHjThi6GKjyp6QC7wjewHN7LaQ1DQxXe1i",
+  "systemid": "iKRtCZT87icurxb1ECUHKBq4jcuCTUV4ty",
   "notarizationprotocol": 1,
   "proofprotocol": 1,
   "launchsystemid": "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq",
-  "startblock": 32248,
+  "startblock": 73237,
   "endblock": 0,
   "currencies": [
     "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq"
@@ -343,23 +343,26 @@ If successful, output should show similar to the following:
   ],
   "preallocations": [
     {
-      "iGTdav42siHgX96ybWn3pRTFxQgiUpZ9K9": 10000000.00000000
+      "iGTdav42siHgX96ybWn3pRTFxQgiUpZ9K9": 20850000.00000000
     },
     {
-      "iCu8oPVnPvLmbiNSDx3tRSRGumEtFV69FJ": 10000000.00000000
+      "iDVuVSjzYatSYq19YkPJdCH6SuA59WBWvC": 25000.00000000
+    },
+    {
+      "i5Cwy6kMHCrLDWw31REbWxAnnZ2mHFUk5D": 25000.00000000
     }
   ],
   "initialcontributions": [
     0.00000000
   ],
-  "gatewayconverterissuance": 1000000.00000000,
+  "gatewayconverterissuance": 100000.00000000,
   "idregistrationfees": 100.00000000,
   "idreferrallevels": 3,
   "idimportfees": 1.00000000,
   "notaries": [
-    "iSGKbfsLYUXuf6J8NaETLyNT7xFyCNKcQY",
-    "iCDovahDV4pT3WoLe18DbA325edTfxmwRq",
-    "iN3gLWmAxczjxSLXfpRLRKA7rzE5X4LnzK"
+    "iGTdav42siHgX96ybWn3pRTFxQgiUpZ9K9",
+    "iDVuVSjzYatSYq19YkPJdCH6SuA59WBWvC",
+    "i5Cwy6kMHCrLDWw31REbWxAnnZ2mHFUk5D"
   ],
   "minnotariesconfirm": 2,
   "currencyregistrationfee": 200.00000000,
@@ -367,9 +370,9 @@ If successful, output should show similar to the following:
   "currencyimportfee": 100.00000000,
   "transactionimportfee": 0.01000000,
   "transactionexportfee": 0.01000000,
-  "gatewayconverterid": "i5XzLJ2zimjo2AHTEVEs4LNbQdX1wxkiqd",
-  "gatewayconvertername": "Cashier",
-  "initialtarget": "000001e1e1000000000000000000000000000000000000000000000000000000",
+  "gatewayconverterid": "iMCX2HwtnpXynPpXfnTATwPF5hz92bYCre",
+  "gatewayconvertername": "bridge",
+  "initialtarget": "000000ff0f000000000000000000000000000000000000000000000000000000",
   "eras": [
     {
       "reward": 0,
@@ -378,19 +381,19 @@ If successful, output should show similar to the following:
       "eraend": 0
     }
   ],
-  "currencyidhex": "56323ff957f74ef3976ca2416cb70851e8e2649c",
+  "currencyidhex": "7733e5dcf2ed716dcb20ebf375ac45239c1902af",
   "fullyqualifiedname": "chipstensec",
   "currencynames": {
-    "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq": "vrsctest"
+    "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq": "VRSCTEST"
   },
-  "definitiontxid": "fe8ac7c7b3c543ff82becba1a27efd244690dfa7bb737946a31cd953dfcd3bd6",
+  "definitiontxid": "567cc5eb56134553ac1eb7da69e74b67fa503d390f128ef0fd569ddb8dd5e897",
   "definitiontxout": 1,
-  "bestheight": 32236,
-  "lastconfirmedheight": 32236,
+  "bestheight": 73219,
+  "lastconfirmedheight": 73219,
   "bestcurrencystate": {
     "flags": 2,
     "version": 1,
-    "currencyid": "iHjThi6GKjyp6QC7wjewHN7LaQ1DQxXe1i",
+    "currencyid": "iKRtCZT87icurxb1ECUHKBq4jcuCTUV4ty",
     "launchcurrencies": [
       {
         "currencyid": "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq",
@@ -422,7 +425,7 @@ If successful, output should show similar to the following:
   "lastconfirmedcurrencystate": {
     "flags": 2,
     "version": 1,
-    "currencyid": "iHjThi6GKjyp6QC7wjewHN7LaQ1DQxXe1i",
+    "currencyid": "iKRtCZT87icurxb1ECUHKBq4jcuCTUV4ty",
     "launchcurrencies": [
       {
         "currencyid": "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq",
@@ -453,6 +456,9 @@ If successful, output should show similar to the following:
   }
 }
 ```
+
+**Cross-reference `startblock` value with current blockchain height.  Do not begin mining/staking until after this height!**
+
 
 ---
 
