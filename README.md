@@ -9,7 +9,7 @@ This repository is intended to document and inform about the steps required to c
 - [Generating a PBaaS chain](#chaingen)
   - [Conceptual description of chosen `definecurrency` options](#chaingen-concept)
     - [Background on CHIPS](#background)
-    - [Itemized options for chipstest2](#options-chipstest2)
+    - [Itemized options for chipstensec chain](#options-chipstensec)
     - [Itemized options for gateway converter](#options-gateway)
   - [Funding identity](#chaingen-fund)
   - [Defining a currency](#chaingen-define)
@@ -133,7 +133,7 @@ Identities can be located by name, or by i-address:
 
 ```
 # By name
-./verus -chain=vrsctest getidentity "chipstest2@"
+./verus -chain=vrsctest getidentity "chipstensec@"
 
 # By i-address
 ./verus -chain=vrsctest getidentity iHjThi6GKjyp6QC7wjewHN7LaQ1DQxXe1i
@@ -150,21 +150,21 @@ If successful, output should show similar to the following:
       "RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph"
     ],
     "minimumsignatures": 1,
-    "name": "chipstest2",
-    "identityaddress": "iHjThi6GKjyp6QC7wjewHN7LaQ1DQxXe1i",
+    "name": "chipstensec",
+    "identityaddress": "iKRtCZT87icurxb1ECUHKBq4jcuCTUV4ty",
     "parent": "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq",
     "systemid": "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq",
     "contentmap": {
     },
-    "revocationauthority": "iHjThi6GKjyp6QC7wjewHN7LaQ1DQxXe1i",
-    "recoveryauthority": "iHjThi6GKjyp6QC7wjewHN7LaQ1DQxXe1i",
+    "revocationauthority": "iKRtCZT87icurxb1ECUHKBq4jcuCTUV4ty",
+    "recoveryauthority": "iKRtCZT87icurxb1ECUHKBq4jcuCTUV4ty",
     "timelock": 0
   },
   "status": "active",
   "canspendfor": true,
   "cansignfor": true,
-  "blockheight": 32120,
-  "txid": "beaff25a7ae6c616828c6e62d752fe51d570a6463274d3d3fc89ba6f17112a4d",
+  "blockheight": 73188,
+  "txid": "b4e78320eb5ecc9d2ff2f3efd2f6fcea9182393658dc589d023825d0ae83b680",
   "vout": 0
 }
 ```
@@ -183,11 +183,11 @@ CHIPS is a coin that has already reached maximum total supply.  In its present f
 
 Verus's fee market presents a unique opportunity for a coin that has already reached its max supply and will emit no new coins.  Actions taken by users via id generation, cross-chain conversions, and more, will provide greater block rewards to miners.  Combined with merge mining capabilities on Verus, this is a big improvement in theoretical security model for CHIPS.
 
-The options below will generate a `chipstest2` blockchain, as well as a gateway converter `Cashier.chipstest2`.
+The options below will generate a `chipstensec` blockchain, as well as a gateway converter `Cashier.chipstensec`.
 
-<h4 id="options-chipstest2">`definecurrency` options for `chipstest2` and justifications</h4>
+<h4 id="options-chipstensec">`definecurrency` options for `chipstensec` and justifications</h4>
 
-- `"name":"CHIPSTEST2"`
+- `"name":"CHIPSTENSEC"`
 
 Name for our generated chain
 
@@ -201,7 +201,7 @@ Defines our chain as being based on existing `vrsctest` currency
 
 - `"maxpreconversion":[0]`
 
-Prevents users of `vrsctest` blockchain from preconverting `vrsctest` to `chipstest2` in during pre-launch period.  If we wanted to accept pre-launch conversions, we could set `minpreconversion` and `maxpreconversion` to specify required preconversion amounts for launch to proceed.
+Prevents users of `vrsctest` blockchain from preconverting `vrsctest` to `chipstensec` in during pre-launch period.  If we wanted to accept pre-launch conversions, we could set `minpreconversion` and `maxpreconversion` to specify required preconversion amounts for launch to proceed.
 
 - `"conversions":[1]`
 
@@ -209,11 +209,11 @@ Specifies the desired conversion ratio for `vrsctest` to `chipstest`
 
 - `"eras"`
 
-Describes reward schedule on new `chipstest2` chain.  We want block subsidies to be zero, so that all emission comes from gateway converter.  Any additional issuance beyond that will be supply-neutral.
+Describes reward schedule on new `chipstensec` chain.  We want block subsidies to be zero, so that all emission comes from gateway converter.  Any additional issuance beyond that will be supply-neutral.
 
 - `"notaries":["Notary1@","Notary2@","Notary3@"]
 
-These notaries will be responsible for notarizing from `chipstest2` to `vrsctest` and vice versa.  These are required for cross-chain interaction.  Specified notaries here belong to identities owned by Verus foundation.
+These notaries will be responsible for notarizing from `chipstensec` to `vrsctest` and vice versa.  These are required for cross-chain interaction.  Specified notaries here belong to identities owned by Verus foundation.
 
 - `"nodes":[{...},{...}]`
 
@@ -221,25 +221,25 @@ Seed nodes for new PBaaS chain
 
 - `"preallocations":[{"biz@":10000000},{"allbits@":10000000}]`
 
-Pre-allocated amount from supply of new chain.  In this example, we are pre-allocating 20 million `chipstest2` coins to identities `biz@` and `allbits@` in equal amounts.  These could then be re-allocated based on snapshot from legacy CHIPS codebase.
+Pre-allocated amount from supply of new chain.  In this example, we are pre-allocating 20 million `chipstensec` coins to identities `biz@` and `allbits@` in equal amounts.  These could then be re-allocated based on snapshot from legacy CHIPS codebase.
 
 <h4 id="options-gateway">`definecurrency` options for gateway converter</h4>
 
 - `"gatewayconvertername":"Cashier"`
 
-Defines a separate blockchain for gateway conversions named `Cashier.chipstest2`
+Defines a separate blockchain for gateway conversions named `Cashier.chipstensec`
 
 - `"gatewayconverterissuance":1000000`
 
-Specifies that our final 1 million `chipstest2` supply will be issued through the gateway converter, for a max supply of 21 million coins.
+Specifies that our final 1 million `chipstensec` supply will be issued through the gateway converter, for a max supply of 21 million coins.
 
-- `"currencies":["vrsctest","nexus","BTC","chipstest2"]`
+- `"currencies":["vrsctest","nexus","BTC","chipstensec"]`
 
 Specifies a basket of currencies backing our gateway issuance.
 
 - `"initialcontributions":[1000,2300,1.9,0]`
 
-Specifies amounts of backing currencies to contribute on launch of gateway from our `chipstest2@` identity address.
+Specifies amounts of backing currencies to contribute on launch of gateway from our `chipstensec@` identity address.
 
 - `"initialsupply":4000`
 
@@ -252,19 +252,19 @@ To generate a PBaaS chain, you will need *at least* a 10,200 VRSCTEST balance in
 
 10,200 VRSCTEST is a base cost (covering 200 VRSCTEST `currencyregistrationfee`, and 10k VRSCTEST `pbaassystemregistrationfee`).  Additional registration costs may be necessary, depending on currency definition specifics.
 
-For this chain, we will be generating both a PBaaS chain (`chipstest2@`), and a gatewayconverter chain (`Cashier.chipstest2`).  We will be initially contributing a basket of currencies to the gateway converter.  In example below, we are sending `15000 VRSCTEST`, `2 BTC`, and `2400 nexus` to fund the basket.
+For this chain, we will be generating both a PBaaS chain (`chipstensec@`), and a gatewayconverter chain (`Cashier.chipstensec`).  We will be initially contributing a basket of currencies to the gateway converter.  In example below, we are sending `15000 VRSCTEST`, `2 BTC`, and `2400 nexus` to fund the basket.
 
 ```
 # send vrsctest
-./verus -chain=vrsctest sendtoaddress chipstest2@ 15000
+./verus -chain=vrsctest sendtoaddress chipstensec@ 15000
 5f423ae417e84d98ac34a6aa3ea97da056717e80ab2a75a238f4a691e3b1f1b7
 
 # send btc
-./verus -chain=VRSCTEST sendcurrency RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph '[{"address":"chipstest2@","currency":"btc","amount":2}]'
+./verus -chain=VRSCTEST sendcurrency RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph '[{"address":"chipstensec@","currency":"btc","amount":2}]'
 opid-a862d7a2-8103-42f2-a5a4-472cbd1068a2
 
 # send nexus
-./verus -chain=VRSCTEST sendcurrency RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph '[{"address":"chipstest2@","currency":"nexus","amount":2500}]'
+./verus -chain=VRSCTEST sendcurrency RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph '[{"address":"chipstensec@","currency":"nexus","amount":2500}]'
 opid-5aa85330-7b12-4259-be27-039b7dbea16b
 ```
 
@@ -284,7 +284,7 @@ We also want to verify that the resulting operation ids for `btc` and `nexus` we
     "method": "sendcurrency",
     "params": [
       {
-        "address": "chipstest2@",
+        "address": "chipstensec@",
         "currency": "btc",
         "amount": 2
       }
@@ -301,7 +301,7 @@ We also want to verify that the resulting operation ids for `btc` and `nexus` we
     "method": "sendcurrency",
     "params": [
       {
-        "address": "chipstest2@",
+        "address": "chipstensec@",
         "currency": "nexus",
         "amount": 2500
       }
@@ -313,7 +313,7 @@ We also want to verify that the resulting operation ids for `btc` and `nexus` we
 <h3 id="chaingen-define">Step 2: Define a currency with desired parameters</h3>
 
 ```
-./verus -chain=vrsctest definecurrency '{"name":"CHIPSTEST2","options":264,"currencies":["vrsctest"],"maxpreconversion":[0], "conversions":[1],"eras":[{"reward":0,"decay":0,"halving":0,"eraend":0}],"notaries":["Notary1@","Notary2@","Notary3@"],"minnotariesconfirm":2,"nodes":[{"networkaddress":"51.222.159.244:12121"},{"networkaddress":"149.56.13.160:12121"}],"preallocations":[{"biz@":10000000},{"allbits@":10000000}], "gatewayconvertername":"Cashier", "gatewayconverterissuance":1000000}' '{"currencies":["vrsctest","nexus","BTC","chipstest2"],"initialcontributions":[1000,2300,1.9,0],"initialsupply":4000}'
+./verus -chain=vrsctest definecurrency '{"name":"chipstensec","options":264,"currencies":["vrsctest"],"maxpreconversion":[0], "conversions":[1],"eras":[{"reward":0,"decay":0,"halving":0,"eraend":0}],"notaries":["Notary1@","Notary2@","Notary3@"],"minnotariesconfirm":2,"nodes":[{"networkaddress":"51.222.159.244:12121"},{"networkaddress":"149.56.13.160:12121"}],"preallocations":[{"biz@":10000000},{"allbits@":10000000}], "gatewayconvertername":"Cashier", "gatewayconverterissuance":1000000}' '{"currencies":["vrsctest","nexus","BTC","chipstensec"],"initialcontributions":[1000,2300,1.9,0],"initialsupply":4000}'
 ```
 
 If successful, you should see a very large JSON output in your terminal.  This command does not finish the process of defining a currency.  It simply constructs a transaction, and does not send it to network.
@@ -333,7 +333,7 @@ fe8ac7c7b3c543ff82becba1a27efd244690dfa7bb737946a31cd953dfcd3bd6
 <h3 id="chaingen-verify">Step 4: Verify currency generation was succesful</h3>
 
 ```
-./verus -chain=vrsctest getcurrency chipstest2
+./verus -chain=vrsctest getcurrency chipstensec
 ```
 
 If successful, output should show similar to the following:
@@ -342,7 +342,7 @@ If successful, output should show similar to the following:
 {
   "version": 1,
   "options": 264,
-  "name": "CHIPSTEST2",
+  "name": "chipstensec",
   "currencyid": "iHjThi6GKjyp6QC7wjewHN7LaQ1DQxXe1i",
   "parent": "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq",
   "systemid": "iHjThi6GKjyp6QC7wjewHN7LaQ1DQxXe1i",
@@ -398,7 +398,7 @@ If successful, output should show similar to the following:
     }
   ],
   "currencyidhex": "56323ff957f74ef3976ca2416cb70851e8e2649c",
-  "fullyqualifiedname": "CHIPSTEST2",
+  "fullyqualifiedname": "chipstensec",
   "currencynames": {
     "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq": "vrsctest"
   },
@@ -489,35 +489,35 @@ To do this, we must be already mining on `VRSCTEST` in our example.  This can be
 ./verusd -chain=vrsctest -gen -genproclimit=2 -mineraddress=RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph -mint &
 ```
 
-Next, we must spin up our `chipstest2` daemon, and start mining.  We can either: a.) fetch the address generated on wallet initialization, or b.) import our WIF private key from `vrsctest` chain.
+Next, we must spin up our `chipstensec` daemon, and start mining.  We can either: a.) fetch the address generated on wallet initialization, or b.) import our WIF private key from `vrsctest` chain.
 
 ```
-# Start chipstest2 daemon
-./verusd -chain=chipstest2 &
+# Start chipstensec daemon
+./verusd -chain=chipstensec &
 
 # option a.) Fetch address generated on init
-./verus -chain=chipstest2 getaddressesbyaccount ""
+./verus -chain=chipstensec getaddressesbyaccount ""
 
 # option b.) import WIF
-./verus -chain=chipstest2 importprivkey <WIF here>
+./verus -chain=chipstensec importprivkey <WIF here>
 ```
 
-Once we've fetched our new address, or imported a known address, we can restart our `chipstest2` daemon to begin merge mining with parent `vrsctest`:
+Once we've fetched our new address, or imported a known address, we can restart our `chipstensec` daemon to begin merge mining with parent `vrsctest`:
 
 ```
-# Stop chipstest2 daemon
-./verus -chain=chipstest2 stop
+# Stop chipstensec daemon
+./verus -chain=chipstensec stop
 
 # Restart with mining options
-./verusd -chain=chipstest2 -gen -genproclimit=2 -mineraddress=RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph -mint &
+./verusd -chain=chipstensec -gen -genproclimit=2 -mineraddress=RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph -mint &
 ```
 
 If successful, you should see output in your terminal:
 
 ```
-Merge mining chipstest2 with vrsctest as the hashing chain
+Merge mining chipstensec with vrsctest as the hashing chain
 Found block 2885
-staking reward 0.00010000 chipstest2!
+staking reward 0.00010000 chipstensec!
 POS hash: 00000000007fca5a2624d9276d2ddd7074f68fd32b9f6c81904d96b4a12f6301
 target:   0000000002e3ae00000000000000000000000000000000000000000000000000
 
