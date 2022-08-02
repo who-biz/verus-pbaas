@@ -169,6 +169,8 @@ If successful, output should show similar to the following:
 }
 ```
 
+**Before generating PBaaS chain, repeat Steps 2 & 3 to generate verus ids for all desired notaries in `definecurrency` command.** 
+
 ---
 
 <h2 id="chaingen">Generating a PBaaS Chain</h2>
