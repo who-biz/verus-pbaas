@@ -185,7 +185,7 @@ CHIPS is a coin that has already reached maximum total supply.  In its present f
 
 Verus's fee market presents a unique opportunity for a coin that has already reached its max supply and will emit no new coins.  Actions taken by users via id generation, cross-chain conversions, and more, will provide greater block rewards to miners.  Combined with merge mining capabilities on Verus, this is a big improvement in theoretical security model for CHIPS.
 
-The options below will generate a `chipstensec` blockchain, as well as a gateway converter `Cashier.chipstensec`.
+The options below will generate a `chipstensec` blockchain, as well as a gateway converter `bridge.chipstensec`.
 
 <h4 id="options-chipstensec">`definecurrency` options for `chipstensec` and justifications</h4>
 
@@ -227,9 +227,9 @@ Pre-allocated amount from supply of new chain.  In this example, we are pre-allo
 
 <h4 id="options-gateway">`definecurrency` options for gateway converter</h4>
 
-- `"gatewayconvertername":"Cashier"`
+- `"gatewayconvertername":"bridge"`
 
-Defines a separate blockchain for gateway conversions named `Cashier.chipstensec`
+Defines a separate blockchain for gateway conversions named `bridge.chipstensec`
 
 - `"gatewayconverterissuance":100000`
 
@@ -254,7 +254,7 @@ To generate a PBaaS chain, you will need *at least* a 10,200 VRSCTEST balance in
 
 10,200 VRSCTEST is a base cost (covering 200 VRSCTEST `currencyregistrationfee`, and 10k VRSCTEST `pbaassystemregistrationfee`).  Additional registration costs may be necessary, depending on currency definition specifics.
 
-For this chain, we will be generating both a PBaaS chain (`chipstensec@`), and a gatewayconverter chain (`Cashier.chipstensec`).  We will be initially contributing a basket of currencies to the gateway converter.  In example below, we are sending `15000 VRSCTEST` and `100 KMD` to fund the basket.
+For this chain, we will be generating both a PBaaS chain (`chipstensec@`), and a gatewayconverter chain (`bridge.chipstensec`).  We will be initially contributing a basket of currencies to the gateway converter.  In example below, we are sending `15000 VRSCTEST` and `100 KMD` to fund the basket.
 
 ```
 # send vrsctest
