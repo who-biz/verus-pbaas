@@ -73,7 +73,7 @@ Fill in equivalent values for your wallet, desired mining process limits, etc.  
 <h3>Step 1: Register name commitment</h3> 
 
 ```
-./verus -chain=vrsctest registernamecommitment chipstest2 RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph
+./verus -chain=vrsctest registernamecommitment chipstensec RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph
 ```
 
 You may optionally add other fields such as a referral id.  Help text should be consulted for optional parameters. They will not be covered here.
@@ -82,14 +82,14 @@ If successful, output should show similar to the following:
 
 ```
 {
-  "txid": "1ba6d12f6645e93fda7a96cdaa1686b09712df5a3693f14c08c2329b76156ae7",
+  "txid": "a5e1cc0dd3ec5774c35087adb2bb7aff7bd74836c6a4c0b75c280aa6419d04a1",
   "namereservation": {
     "version": 1,
-    "name": "chipstest2",
+    "name": "chipstensec",
     "parent": "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq",
-    "salt": "4e070d521f213777fad182d3525ffdabf2a55cc4d612276163af5cb47d3084df",
+    "salt": "6b2ff5b181e2788b5108592742d9214b0e9a33569e5e1ebad48e4000e9aad986",
     "referral": "",
-    "nameid": "iHjThi6GKjyp6QC7wjewHN7LaQ1DQxXe1i"
+    "nameid": "iKRtCZT87icurxb1ECUHKBq4jcuCTUV4ty"
   }
 }
 ```
@@ -100,17 +100,17 @@ Copy and paste the entire resulting JSON object into a `registeridentity` comman
 
 ```
 ./verus -chain=vrsctest registeridentity '{
-  "txid": "1ba6d12f6645e93fda7a96cdaa1686b09712df5a3693f14c08c2329b76156ae7",
+  "txid": "a5e1cc0dd3ec5774c35087adb2bb7aff7bd74836c6a4c0b75c280aa6419d04a1",
   "namereservation": {
     "version": 1,
-    "name": "chipstest2",
+    "name": "chipstensec",
     "parent": "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq",
-    "salt": "4e070d521f213777fad182d3525ffdabf2a55cc4d612276163af5cb47d3084df",
+    "salt": "6b2ff5b181e2788b5108592742d9214b0e9a33569e5e1ebad48e4000e9aad986",
     "referral": "",
-    "nameid": "iHjThi6GKjyp6QC7wjewHN7LaQ1DQxXe1i"
+    "nameid": "iKRtCZT87icurxb1ECUHKBq4jcuCTUV4ty"
   },
     "identity":{
-        "name":"chipstest2", 
+        "name":"chipstensec", 
         "primaryaddresses":["RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph"], 
         "minimumsignatures":1, 
         "privateaddress": ""
@@ -122,7 +122,7 @@ You should modify relevant identity fields to match desired id, control address,
 If successful, output should display a txid:
 
 ```
-beaff25a7ae6c616828c6e62d752fe51d570a6463274d3d3fc89ba6f17112a4d
+b4e78320eb5ecc9d2ff2f3efd2f6fcea9182393658dc589d023825d0ae83b680
 ```
 
 Wait for this transaction to be confirmed.
