@@ -213,17 +213,17 @@ Specifies the desired conversion ratio for `vrsctest` to `chipstest`
 
 Describes reward schedule on new `chipstensec` chain.  We want block subsidies to be zero, so that all emission comes from gateway converter.  Any additional issuance beyond that will be supply-neutral.
 
-- `"notaries":["Notary1@","Notary2@","Notary3@"]
+- `"notaries":["biz@","BizNotary@","BizNotary2@"]`
 
-These notaries will be responsible for notarizing from `chipstensec` to `vrsctest` and vice versa.  These are required for cross-chain interaction.  Specified notaries here belong to identities owned by Verus foundation.
+These notaries will be responsible for notarizing from `chipstensec` to `vrsctest` and vice versa.  These are required for cross-chain interaction.  Specified notaries here are all owned by Biz's control address.
 
 - `"nodes":[{...},{...}]`
 
 Seed nodes for new PBaaS chain
 
-- `"preallocations":[{"biz@":10000000},{"allbits@":10000000}]`
+- `"preallocations":[{"biz@":20850000},{"BizNotary@":25000},{"BizNotary2@":25000}]`
 
-Pre-allocated amount from supply of new chain.  In this example, we are pre-allocating 20 million `chipstensec` coins to identities `biz@` and `allbits@` in equal amounts.  These could then be re-allocated based on snapshot from legacy CHIPS codebase.
+Pre-allocated amount from supply of new chain.  In this example, we are pre-allocating 20,900,000 `chipstensec` coins to identities `biz@`, `BizNotary@`, and `BizNotary2@`.  These can then be re-allocated based on snapshot from legacy CHIPS codebase.
 
 <h4 id="options-gateway">`definecurrency` options for gateway converter</h4>
 
@@ -231,21 +231,21 @@ Pre-allocated amount from supply of new chain.  In this example, we are pre-allo
 
 Defines a separate blockchain for gateway conversions named `Cashier.chipstensec`
 
-- `"gatewayconverterissuance":1000000`
+- `"gatewayconverterissuance":100000`
 
-Specifies that our final 1 million `chipstensec` supply will be issued through the gateway converter, for a max supply of 21 million coins.
+Specifies that our final 100,000 `chipstensec` supply will be issued through the gateway converter, for a max supply of 21 million coins.
 
-- `"currencies":["vrsctest","nexus","BTC","chipstensec"]`
+- `"currencies":["vrsctest","kmd","chipstensec"]`
 
 Specifies a basket of currencies backing our gateway issuance.
 
-- `"initialcontributions":[1000,2300,1.9,0]`
+- `"initialcontributions":[1000,90,0]`
 
 Specifies amounts of backing currencies to contribute on launch of gateway from our `chipstensec@` identity address.
 
-- `"initialsupply":4000`
+- `"initialsupply":3000`
 
-1:1 backing against `vrsctest` amount of 1000 in a basket of 4 currencies
+1:1 backing against `vrsctest` amount of 1000 in a basket of 3 currencies
 
 
 <h3 id="chaingen-fund">Step 1: Send VRSCTEST, and Basket currencies to identity address</h3>
