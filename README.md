@@ -9,7 +9,7 @@ This repository is intended to document and inform about the steps required to c
 - [Generating a PBaaS chain](#chaingen)
   - [Conceptual description of chosen `definecurrency` options](#chaingen-concept)
     - [Background on CHIPS](#background)
-    - [Itemized options for chips chain](#options-chips)
+    - [Itemized options for chips10sec chain](#options-chips10sec)
     - [Itemized options for gateway converter](#options-gateway)
   - [Funding identity](#chaingen-fund)
   - [Defining a currency](#chaingen-define)
@@ -73,7 +73,7 @@ Fill in equivalent values for your wallet, desired mining process limits, etc.  
 <h3>Step 1: Register name commitment</h3> 
 
 ```
-./verus -chain=vrsctest registernamecommitment chips RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph
+./verus -chain=vrsctest registernamecommitment chips10sec RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph
 ```
 
 You may optionally add other fields such as a referral id.  Help text should be consulted for optional parameters. They will not be covered here.
@@ -81,15 +81,17 @@ You may optionally add other fields such as a referral id.  Help text should be 
 If successful, output should show similar to the following:
 
 ```
-  "txid": "2f405700b51c4ef8003a2ea554ea7cd0358c113920018b83bc4dd8d0737eab4a",
+{
+  "txid": "61839b7108b6ba5fa8c5c8483df5fb9eb823264cb349c33151928d3fbf98fe4c",
   "namereservation": {
     "version": 1,
-    "name": "chips",
+    "name": "chips10sec",
     "parent": "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq",
-    "salt": "67291251c09309dbf9e71f4b526179a15be27d8d3c7a0144bbf452446565c6cb",
+    "salt": "99784ab53ec52f3158ca2c636b2b3dd7304708fece587038b231d6821c7df45a",
     "referral": "",
-    "nameid": "i4hY67UdHJcbj4DP2xiMtUZRNhLq4BsbsS"
+    "nameid": "iLThsqsgwFRKzRG11j7QaYgNQJ9q16VGpg"
   }
+}
 ```
 
 <h3>Step 2: Register identity</h3>
@@ -98,17 +100,17 @@ Copy and paste the entire resulting JSON object into a `registeridentity` comman
 
 ```
 ./verus -chain=vrsctest registeridentity '{
-  "txid": "2f405700b51c4ef8003a2ea554ea7cd0358c113920018b83bc4dd8d0737eab4a",
+  "txid": "61839b7108b6ba5fa8c5c8483df5fb9eb823264cb349c33151928d3fbf98fe4c",
   "namereservation": {
     "version": 1,
-    "name": "chips",
+    "name": "chips10sec",
     "parent": "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq",
-    "salt": "67291251c09309dbf9e71f4b526179a15be27d8d3c7a0144bbf452446565c6cb",
+    "salt": "99784ab53ec52f3158ca2c636b2b3dd7304708fece587038b231d6821c7df45a",
     "referral": "",
-    "nameid": "i4hY67UdHJcbj4DP2xiMtUZRNhLq4BsbsS"
-  },
+    "nameid": "iLThsqsgwFRKzRG11j7QaYgNQJ9q16VGpg"
+  }, 
     "identity":{
-        "name":"chips", 
+        "name":"chips10sec", 
         "primaryaddresses":["RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph"], 
         "minimumsignatures":1, 
         "privateaddress": ""
@@ -120,7 +122,7 @@ You should modify relevant identity fields to match desired id, control address,
 If successful, output should display a txid:
 
 ```
-c0db5980f6307ddf6b8bc04858c4e4b35dd524363ef04d88a18a74aa6a6415ee
+b0a2687a721d5da11d4605d0d711f973676a214da365bdc1d4871d1a30dbbec9
 ```
 
 Wait for this transaction to be confirmed.
@@ -131,10 +133,10 @@ Identities can be located by name, or by i-address:
 
 ```
 # By name
-./verus -chain=vrsctest getidentity "chips@"
+./verus -chain=vrsctest getidentity "chips10sec@"
 
 # By i-address
-./verus -chain=vrsctest getidentity i4hY67UdHJcbj4DP2xiMtUZRNhLq4BsbsS
+./verus -chain=vrsctest getidentity iLThsqsgwFRKzRG11j7QaYgNQJ9q16VGpg
 ```
 
 If successful, output should show similar to the following:
@@ -148,23 +150,23 @@ If successful, output should show similar to the following:
       "RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph"
     ],
     "minimumsignatures": 1,
-    "name": "chips",
-    "identityaddress": "i4hY67UdHJcbj4DP2xiMtUZRNhLq4BsbsS",
+    "name": "chips10sec",
+    "identityaddress": "iLThsqsgwFRKzRG11j7QaYgNQJ9q16VGpg",
     "parent": "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq",
     "systemid": "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq",
     "contentmap": {
     },
     "contentmultimap": {
     },
-    "revocationauthority": "i4hY67UdHJcbj4DP2xiMtUZRNhLq4BsbsS",
-    "recoveryauthority": "i4hY67UdHJcbj4DP2xiMtUZRNhLq4BsbsS",
+    "revocationauthority": "iLThsqsgwFRKzRG11j7QaYgNQJ9q16VGpg",
+    "recoveryauthority": "iLThsqsgwFRKzRG11j7QaYgNQJ9q16VGpg",
     "timelock": 0
   },
   "status": "active",
   "canspendfor": true,
   "cansignfor": true,
-  "blockheight": 29929,
-  "txid": "c0db5980f6307ddf6b8bc04858c4e4b35dd524363ef04d88a18a74aa6a6415ee",
+  "blockheight": 30839,
+  "txid": "b0a2687a721d5da11d4605d0d711f973676a214da365bdc1d4871d1a30dbbec9",
   "vout": 0
 }
 ```
@@ -185,11 +187,11 @@ CHIPS is a coin that has already reached maximum total supply.  In its present f
 
 Verus's fee market presents a unique opportunity for a coin that has already reached its max supply and will emit no new coins.  Actions taken by users via id generation, cross-chain conversions, and more, will provide greater block rewards to miners.  Combined with merge mining capabilities on Verus, this is a big improvement in theoretical security model for CHIPS.
 
-The options below will generate a `chips` blockchain, as well as a gateway converter `bridge.chips`.
+The options below will generate a `chips10sec` blockchain, as well as a gateway converter `bridge.chips10sec`.
 
-<h4 id="options-chips">`definecurrency` options for `chips` and justifications</h4>
+<h4 id="options-chips10sec">`definecurrency` options for `chips10sec` and justifications</h4>
 
-- `"name":"chips"`
+- `"name":"chips10sec"`
 
 Name for our generated chain
 
@@ -203,49 +205,47 @@ Defines our chain as being based on existing `vrsctest` currency
 
 - `"maxpreconversion":[0]`
 
-Prevents users of `vrsctest` blockchain from preconverting `vrsctest` to `chips` in during pre-launch period.  If we wanted to accept pre-launch conversions, we could set `minpreconversion` and `maxpreconversion` to specify required preconversion amounts for launch to proceed.
+Prevents users of `vrsctest` blockchain from preconverting `vrsctest` to `chips10sec` in during pre-launch period.  If we wanted to accept pre-launch conversions, we could set `minpreconversion` and `maxpreconversion` to specify required preconversion amounts for launch to proceed.
 
 - `"conversions":[1]`
 
-Specifies the desired conversion ratio for `vrsctest` to `chips`
+Specifies the desired conversion ratio for `vrsctest` to `chips10sec`
 
 - `"eras"`
 
-Describes reward schedule on new `chips` chain.  We want block subsidies to be zero, so that all emission comes from gateway converter.  Any additional issuance beyond that will be supply-neutral.
+Describes reward schedule on new `chips10sec` chain.  We want block subsidies to be zero, so that all emission comes from gateway converter.  Any additional issuance beyond that will be supply-neutral.
 
 - `"notaries":["biz@","BizNotary@","BizNotary1@"]`
 
-These notaries will be responsible for notarizing from `chips` to `vrsctest` and vice versa.  These are required for cross-chain interaction.  Specified notaries here are all owned by Biz's control address.
+These notaries will be responsible for notarizing from `chips10sec` to `vrsctest` and vice versa.  These are required for cross-chain interaction.  Specified notaries here are all owned by Biz's control address.
 
 - `"nodes":[{...},{...}]`
 
 Seed nodes for new PBaaS chain
 
-- `"preallocations":[{"biz@":2950000}]`
+- `"preallocations":[{"biz@":20950000}]`
 
-Pre-allocated amount from supply of new chain.  In this example, we are pre-allocating 20,900,000 `chips` coins to identities `biz@`, `BizNotary@`, and `BizNotary2@`.  These can then be re-allocated based on snapshot from legacy CHIPS codebase.
+Pre-allocated amount from supply of new chain.  In this example, we are pre-allocating 20,950,000 `chips10sec` coins to identity `biz@`.  These can then be re-allocated based on snapshot from legacy CHIPS codebase.
 
 <h4 id="options-gateway">`definecurrency` options for gateway converter</h4>
 
 - `"gatewayconvertername":"bridge"`
 
-Defines a separate blockchain for gateway conversions named `bridge.chips`
+Defines a separate blockchain for gateway conversions named `bridge.chips10sec`
 
 - `"gatewayconverterissuance":50000`
 
-Specifies that our final 100,000 `chips` supply will be issued through the gateway converter, for a max supply of 21 million coins.
+Specifies that our final 100,000 `chips10sec` supply will be issued through the gateway converter, for a max supply of 21 million coins.
 
-- `"currencies":["vrsctest","chips"]`
+- `"currencies":["vrsctest","kmd","chips10sec"]`
 
 Specifies a basket of currencies backing our gateway issuance.
 
-- `"initialcontributions":[1000,0]`
+- `"initialcontributions":[1000,200,0]`
 
-Specifies amounts of backing currencies to contribute on launch of gateway from our `chips@` identity address.
+Specifies amounts of backing currencies to contribute on launch of gateway from our `chips10sec@` identity address.
 
-- `"initialsupply":2000`
-
-1:1 backing against `vrsctest` amount of 1000 in a basket of 2 currencies
+- `"initialsupply":2400`
 
 
 <h3 id="chaingen-fund">Step 1: Send VRSCTEST, and Basket currencies to identity address</h3>
@@ -254,49 +254,48 @@ To generate a PBaaS chain, you will need *at least* a 10,200 VRSCTEST balance in
 
 10,200 VRSCTEST is a base cost (covering 200 VRSCTEST `currencyregistrationfee`, and 10k VRSCTEST `pbaassystemregistrationfee`).  Additional registration costs may be necessary, depending on currency definition specifics.
 
-For this chain, we will be generating both a PBaaS chain (`chips@`), and a gatewayconverter chain (`bridge.chips`).  We will be initially contributing a basket of currencies to the gateway converter.  In example below, we are sending `14600 VRSCTEST` to fund the basket.
+For this chain, we will be generating both a PBaaS chain (`chips10sec@`), and a gatewayconverter chain (`bridge.chips10sec`).  We will be initially contributing a basket of currencies to the gateway converter.  In example below, we are sending `12000 VRSCTEST` and `200 KMD` to fund the basket.
 
 ```
 # send vrsctest
-./verus -chain=vrsctest sendtoaddress chips@ 14600
-e26b129e25f8372a9190ff4d88a76601fd85631fa8cae41061bf067a4c07095d
+./verus -chain=vrsctest sendtoaddress chips10sec@ 12000
+58ae24dfc439dd8de9e53a3fddc8237482d8d298a4d5c70af2c34595b1f9b862
 
-#DISREGARD BELOW, LEFT AS EXAMPLE. NOT NECESSARY FOR UPDATED PROCEDURE ABOVE
-
-# send kmd
-#./verus -chain=VRSCTEST sendcurrency RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph '[{"address":"chips@","currency":"kmd","amount":120}]'
-#opid-90c1e936-830f-416b-8532-dd75fc14ad85
-```
-
-~~We also want to verify that the resulting operation id for 'kmd` transfer succeeded:~~
+ send kmd
+./verus -chain=VRSCTEST sendcurrency RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph '[{"address":"chips10sec@","currency":"kmd","amount":110}]'
+opid-6865bf89-ff94-4cf9-aa75-aa9176e58763
 
 ```
-#./verus -chain=vrsctest z_getoperationresult '["opid-90c1e936-830f-416b-8532-dd75fc14ad85"]'
-#[
-#  {
-#    "id": "opid-e96fa394-7a8d-4782-a05b-af9ae3852fce",
-#    "status": "success",
-#    "creation_time": 1659457274,
-#    "result": {
-#      "txid": "34f81f6ad827f42788f1683a57895d8e071a6c04758e40870f005e6efa418f11"
-#    },
-#    "execution_secs": 0.305115012,
-#    "method": "sendcurrency",
-#    "params": [
-#      {
-#        "address": "chips@",
-#        "currency": "kmd",
-#        "amount": 100
-#      }
-#    ]
-#  }
-#]
+
+We also want to verify that the resulting operation id for 'kmd` transfer succeeded:
+
+```
+./verus -chain=vrsctest z_getoperationresult '["opid-6865bf89-ff94-4cf9-aa75-aa9176e58763"]'
+[
+  {
+    "id": "opid-6865bf89-ff94-4cf9-aa75-aa9176e58763",
+    "status": "success",
+    "creation_time": 1668717541,
+    "result": {
+      "txid": "781bb2b906bc523717f2aa13962a8b272472302dc8d09815f2c22ae0bc22f9b7"
+    },
+    "execution_secs": 0.045698179,
+    "method": "sendcurrency",
+    "params": [
+      {
+        "currency": "KMD",
+        "address": "chips10sec@",
+        "amount": 110.00
+      }
+    ]
+  }
+]
 ```
 
 <h3 id="chaingen-define">Step 2: Define a currency with desired parameters</h3>
 
 ```
-./verus -chain=vrsctest definecurrency '{"name":"chips","options":264,"currencies":["vrsctest"],"maxpreconversion":[0], "conversions":[1],"eras":[{"reward":0,"decay":0,"halving":0,"eraend":0}],"notaries":["biz@","BizNotary@","BizNotary1@"],"minnotariesconfirm":2,"nodes":[{"networkaddress":"51.222.159.244:12121"},{"networkaddress":"149.56.13.160:12121"}],"preallocations":[{"biz@":29950000}], "gatewayconvertername":"bridge", "gatewayconverterissuance":50000}' '{"currencies":["vrsctest","chips"],"initialcontributions":[1000,0],"initialsupply":2000}'
+./verus -chain=vrsctest definecurrency '{"name":"chips10sec","options":264,"currencies":["vrsctest"],"maxpreconversion":[0], "conversions":[1],"eras":[{"reward":0,"decay":0,"halving":0,"eraend":0}],"notaries":["biz@","biznotary@","biznotary1@"],"minnotariesconfirm":2,"nodes":[{"networkaddress":"51.222.159.244:21211"},{"networkaddress":"149.56.13.160:21211"}],"preallocations":[{"biz@":20950000}], "gatewayconvertername":"bridge", "gatewayconverterissuance":50000, "blocktime":10}' '{"currencies":["vrsctest","kmd","chips10sec"],"initialcontributions":[1000,200,0],"initialsupply":2400}'
 ```
 
 If successful, you should see a very large JSON output in your terminal.  This command does not finish the process of defining a currency.  It simply constructs a transaction, and does not send it to network.
@@ -307,16 +306,16 @@ If successful, you should see a very large JSON output in your terminal.  This c
 Copy and paste the `"hex"` value from JSON output into `sendrawtransaction`
 
 ```
-./verus -chain=vrsctest sendrawtransaction 0400008085202f8902ee15646aaa748aa1884df03e3624d55db3e4c45848c08b6bdf7d30f68059dbc000000000694c67010101012102d6cffd65b1e6209af2266742f5e048614658e48d023c1e2c8e7e5ec4454bfc9940f7cab3fbd473748e5a0a112f3e48e3ecebafb650eac777aaea25e0714ab927980c974058ae8f2b57552c8a1ddedc98fdedfc341a195d27895c3768bb56c24439ffffffff5d09074c7a06bf6110e4caa81f6385fd0166a7884dff90912a37f8259e126be201000000694c67010101012102d6cffd65b1e6209af2266742f5e048614658e48d023c1e2c8e7e5ec4454bfc9940ca6ab9b812daa04ad3066748fb991a77cf177d09e5c7a25257a21b10a7e5adaf726ea1641c426b85f39afd075a6886c3ee80326de366b3cdb232a6166fb71e93ffffffff0d0000000000000000fd200147040300010315040d6e14a9882b5b157348af5001beb8fdefedeec115040d6e14a9882b5b157348af5001beb8fdefedeec115040d6e14a9882b5b157348af5001beb8fdefedeec1cc4cd404030e010115040d6e14a9882b5b157348af5001beb8fdefedeec14c7f03000000010000000114fdb1570a0d7ff7ec497ae03fef470b30ab75b1e501000000a6ef9ea235635e328124ff3429db9f9e91b64e2d05636869707300000d6e14a9882b5b157348af5001beb8fdefedeec10d6e14a9882b5b157348af5001beb8fdefedeec100a6ef9ea235635e328124ff3429db9f9e91b64e2d000000001b04030f010115040d6e14a9882b5b157348af5001beb8fdefedeec11b040310010115040d6e14a9882b5b157348af5001beb8fdefedeec1750000000000000000fdbe012704030001012102a0de91740d3d5a3a4a7990ae22315133d02f33716b339ebce88662d012224ef5cc4d910104030201012102a0de91740d3d5a3a4a7990ae22315133d02f33716b339ebce88662d012224ef54d67010100000008010000a6ef9ea235635e328124ff3429db9f9e91b64e2d056368697073a6ef9ea235635e328124ff3429db9f9e91b64e2d0d6e14a9882b5b157348af5001beb8fdefedeec101000000010000000000000000000000000000000000000000000000000080e907000000000000000000018e6e5ae05ebf7dd1d74b17f45ca4791e68bf639e00301ac7efa30a00005039278c04000001a6ef9ea235635e328124ff3429db9f9e91b64e2d000100e1f50500000000000100000000000000000100000000000000000100000000000000000000000000038e6e5ae05ebf7dd1d74b17f45ca4791e68bf639e6df4164224d7eb36df23a3fccf2cd6ae7b5827dc4d3213c88cd5b55c4e16c151a34a63f37e52f1ae02a49faec70003f98800c9bfde8f009c8ca4939f00a49faec700bc8340bc8340066272696467650fff001e3c0000002d0000000a0001000000000000000001000000000000000001000000000100000000750000000000000000b51a0403000101146e4ae35cca122eb65e73abd4c956940ef25a3eabcc4c9604030d0101146e4ae35cca122eb65e73abd4c956940ef25a3eab4c7a010001000d6e14a9882b5b157348af5001beb8fdefedeec1010000000d6e14a9882b5b157348af5001beb8fdefedeec10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004000000750000000000000000fdb9012704030001012102d85f078815b7a52faa92639c3691d2a640e26c4e06de54dd1490f0e93bcc11c3cc4d8c0104030501012102d85f078815b7a52faa92639c3691d2a640e26c4e06de54dd1490f0e93bcc11c34d620102800300000d6e14a9882b5b157348af5001beb8fdefedeec1010002000d6e14a9882b5b157348af5001beb8fdefedeec101a6ef9ea235635e328124ff3429db9f9e91b64e2d01000000000100e1f50500000000000084a98ebdf1ccff0000000000000000000000000000000000000000000000000000000000000000000100000000000000000100000000000000000100000000000000000100e1f505000000000100000000000000000100000000000000000100000000010000000000000000f37400000000000000000000000000000000000000000000000000000000000000000000ffffffff0000000000000000000000000000000000000000000000000000000000000000000000000000021435312e3232322e3135392e3234343a31323132310000000000000000000000000000000000000000133134392e35362e31332e3136303a31323132310000000000000000000000000000000000000000750000000000000000fdff002704030001012102cbfe54fb371cfc89d35b46cafcad6ac3b7dc9b40546b0f30b2b29a4865ed3b4acc4cd304030c01012102cbfe54fb371cfc89d35b46cafcad6ac3b7dc9b40546b0f30b2b29a4865ed3b4a4caa01004100a6ef9ea235635e328124ff3429db9f9e91b64e2d00000000000000000000000000000000000000000000000000000000000000000d6e14a9882b5b157348af5001beb8fdefedeec10d6e14a9882b5b157348af5001beb8fdefedeec10000ffffffff000000000080e87301a6ef9ea235635e328124ff3429db9f9e91b64e2d0088526a7400000001a6ef9ea235635e328124ff3429db9f9e91b64e2d0088526a740000000000750000000000000000fd4b012704030001012102a0de91740d3d5a3a4a7990ae22315133d02f33716b339ebce88662d012224ef5cc4d1e0104030201012102a0de91740d3d5a3a4a7990ae22315133d02f33716b339ebce88662d012224ef54cf501000000210200000d6e14a9882b5b157348af5001beb8fdefedeec106627269646765a6ef9ea235635e328124ff3429db9f9e91b64e2d0d6e14a9882b5b157348af5001beb8fdefedeec1010000000100000000000d6e14a9882b5b157348af5001beb8fdefedeec180e9070000d0ed902e00000000005039278c04000002a6ef9ea235635e328124ff3429db9f9e91b64e2d0d6e14a9882b5b157348af5001beb8fdefedeec10280f0fa0280f0fa02020000000000000000000000000000000000000200e876481700000000000000000000000200e8764817000000000000000000000000000000000000a49faec70003f98800750000000000000000b51a0403000101146e4ae35cca122eb65e73abd4c956940ef25a3eabcc4c9604030d0101146e4ae35cca122eb65e73abd4c956940ef25a3eab4c7a010001000d6e14a9882b5b157348af5001beb8fdefedeec101000000f8d5a8b1a192be2e5e2f661b17b17583f64dbb7200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000ffffffff750000000000000000fdc7012704030001012102d85f078815b7a52faa92639c3691d2a640e26c4e06de54dd1490f0e93bcc11c3cc4d9a0104030501012102d85f078815b7a52faa92639c3691d2a640e26c4e06de54dd1490f0e93bcc11c34d70010280030000f8d5a8b1a192be2e5e2f661b17b17583f64dbb7201000300f8d5a8b1a192be2e5e2f661b17b17583f64dbb7202a6ef9ea235635e328124ff3429db9f9e91b64e2d0d6e14a9882b5b157348af5001beb8fdefedeec10280f0fa0280f0fa02020000000000000000005039278c04000084e886b69f000084e886b69f000000000000000000000000000000000000000000000000000000000000000000020000000000000000005039278c0400000200000000000000000000000000000000020000000000000000000000000000000002a086010000000000a086010000000000020000000000000000000000000000000002000000000000000000000000000000000200000000000000000200000000000000000000000000000000f37400000000000000000000000000000000000000000000000000000000000000000000ffffffff000000000000000000000000000000000000000000000000000000000000000000000000000000750000000000000000fdff002704030001012102cbfe54fb371cfc89d35b46cafcad6ac3b7dc9b40546b0f30b2b29a4865ed3b4acc4cd304030c01012102cbfe54fb371cfc89d35b46cafcad6ac3b7dc9b40546b0f30b2b29a4865ed3b4a4caa01004100a6ef9ea235635e328124ff3429db9f9e91b64e2d00000000000000000000000000000000000000000000000000000000000000000d6e14a9882b5b157348af5001beb8fdefedeec1f8d5a8b1a192be2e5e2f661b17b17583f64dbb720000ffffffff000000000080e87301a6ef9ea235635e328124ff3429db9f9e91b64e2d00e40b540200000001a6ef9ea235635e328124ff3429db9f9e91b64e2d00e40b5402000000000075cbc6f44917000000981a040300010114cb8a0f7f651b484a81e2312c3438deb601e27368cc4c79040308010114cb8a0f7f651b484a81e2312c3438deb601e273684c5d01a6ef9ea235635e328124ff3429db9f9e91b64e2d81f3ced0f02b05a6ef9ea235635e328124ff3429db9f9e91b64e2d809b200414f8d5a8b1a192be2e5e2f661b17b17583f64dbb72f8d5a8b1a192be2e5e2f661b17b17583f64dbb72750088526a74000000832704030001012103b99d7cb946c5b1f8a54cde49b8d7e0a2a15a22639feb798009f82b519526c050cc4c5704030b01012103b99d7cb946c5b1f8a54cde49b8d7e0a2a15a22639feb798009f82b519526c0502f01a6ef9ea235635e328124ff3429db9f9e91b64e2d8dc5d1c98f000d6e14a9882b5b157348af5001beb8fdefedeec17500e40b5402000000822704030001012103b99d7cb946c5b1f8a54cde49b8d7e0a2a15a22639feb798009f82b519526c050cc4c5604030b01012103b99d7cb946c5b1f8a54cde49b8d7e0a2a15a22639feb798009f82b519526c0502e01a6ef9ea235635e328124ff3429db9f9e91b64e2da49faec7000d6e14a9882b5b157348af5001beb8fdefedeec175356916284f00000024050403000000cc1b040300010115040d6e14a9882b5b157348af5001beb8fdefedeec17500000000087500000000000000000000000000
+./verus -chain=vrsctest sendrawtransaction 0400008085202f8904c9bedb301a1d87d4c1bd65a34d216a6773f911d7d005461da15d1d727a68a2b000000000694c67010101012102d6cffd65b1e6209af2266742f5e048614658e48d023c1e2c8e7e5ec4454bfc99408cff75e2cab0c8790c2f8d6e6d7ee871629280007a8ff2e1733ae5a1c02860947ef9d5f78eb18eb23def5ad2e0c740fe646cbbdd714e9cb78dbc6640a57be115ffffffff195da351ca10c68cdb5495690c463e1c78988801123a18ddd7f54a78da78c24000000000694c67010101012102d6cffd65b1e6209af2266742f5e048614658e48d023c1e2c8e7e5ec4454bfc9940bae02dad15abdd543a570cc5ebe36d592a8a1865697b5c9b97aa9165dd00be537012c37c1190399325f765ba09e626531085fd187a1f26ac322834497c4ce53bffffffffb7f922bce02ac2f21598d0c82d307224278b2a9613aaf2173752bc06b9b21b7800000000694c67010101012102d6cffd65b1e6209af2266742f5e048614658e48d023c1e2c8e7e5ec4454bfc9940034d14db3e197491eee08dc9e66713270c0df27a1d19d22d8489cb373c99819a37213baf4e6f7d1908acfd7b3c8f5edda366b0d9aa65c0dee5c4f1abb47d0ceeffffffff62b8f9b19545c3f20ac7d5a498d2d8827423c8dd3f3ae5e98ddd39c4df24ae5801000000694c67010101012102d6cffd65b1e6209af2266742f5e048614658e48d023c1e2c8e7e5ec4454bfc994074b04fdc3e140840548ec2bd8f19e6b428036fe6fd276d5a35edd1bd502cb5ab1516a1347285f56879bf461338027b8285a3ca20756b0eac6c594e73222ba0f5ffffffff0e0000000000000000fd25014704030001031504ba5270d765535b4afaa44f23ab334fcb31c967da1504ba5270d765535b4afaa44f23ab334fcb31c967da1504ba5270d765535b4afaa44f23ab334fcb31c967dacc4cd904030e01011504ba5270d765535b4afaa44f23ab334fcb31c967da4c8403000000010000000114fdb1570a0d7ff7ec497ae03fef470b30ab75b1e501000000a6ef9ea235635e328124ff3429db9f9e91b64e2d0a636869707331307365630000ba5270d765535b4afaa44f23ab334fcb31c967daba5270d765535b4afaa44f23ab334fcb31c967da00a6ef9ea235635e328124ff3429db9f9e91b64e2d000000001b04030f01011504ba5270d765535b4afaa44f23ab334fcb31c967da1b04031001011504ba5270d765535b4afaa44f23ab334fcb31c967da750000000000000000fdc3012704030001012102a0de91740d3d5a3a4a7990ae22315133d02f33716b339ebce88662d012224ef5cc4d960104030201012102a0de91740d3d5a3a4a7990ae22315133d02f33716b339ebce88662d012224ef54d6c010100000008010000a6ef9ea235635e328124ff3429db9f9e91b64e2d0a63686970733130736563a6ef9ea235635e328124ff3429db9f9e91b64e2dba5270d765535b4afaa44f23ab334fcb31c967da01000000010000000000000000000000000000000000000000000000000080f031000000000000000000018e6e5ae05ebf7dd1d74b17f45ca4791e68bf639e00f0cd3264710700005039278c04000001a6ef9ea235635e328124ff3429db9f9e91b64e2d000100e1f50500000000000100000000000000000100000000000000000100000000000000000000000000038e6e5ae05ebf7dd1d74b17f45ca4791e68bf639e6df4164224d7eb36df23a3fccf2cd6ae7b5827dc4d3213c88cd5b55c4e16c151a34a63f37e52f1ae02a49faec70003f98800c9bfde8f009c8ca4939f00a49faec700bc8340bc8340066272696467650fff001e0a0000002d0000003c0001000000000000000001000000000000000001000000000100000000750000000000000000b51a0403000101146e4ae35cca122eb65e73abd4c956940ef25a3eabcc4c9604030d0101146e4ae35cca122eb65e73abd4c956940ef25a3eab4c7a01000100ba5270d765535b4afaa44f23ab334fcb31c967da01000000ba5270d765535b4afaa44f23ab334fcb31c967da0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004000000750000000000000000fdb9012704030001012102d85f078815b7a52faa92639c3691d2a640e26c4e06de54dd1490f0e93bcc11c3cc4d8c0104030501012102d85f078815b7a52faa92639c3691d2a640e26c4e06de54dd1490f0e93bcc11c34d62010280030000ba5270d765535b4afaa44f23ab334fcb31c967da01000200ba5270d765535b4afaa44f23ab334fcb31c967da01a6ef9ea235635e328124ff3429db9f9e91b64e2d01000000000100e1f50500000000000082dcbd84cf9bff0000000000000000000000000000000000000000000000000000000000000000000100000000000000000100000000000000000100000000000000000100e1f5050000000001000000000000000001000000000000000001000000000100000000000000009d7800000000000000000000000000000000000000000000000000000000000000000000ffffffff0000000000000000000000000000000000000000000000000000000000000000000000000000021435312e3232322e3135392e3234343a32313231310000000000000000000000000000000000000000133134392e35362e31332e3136303a32313231310000000000000000000000000000000000000000750000000000000000fdff002704030001012102cbfe54fb371cfc89d35b46cafcad6ac3b7dc9b40546b0f30b2b29a4865ed3b4acc4cd304030c01012102cbfe54fb371cfc89d35b46cafcad6ac3b7dc9b40546b0f30b2b29a4865ed3b4a4caa01004100a6ef9ea235635e328124ff3429db9f9e91b64e2d0000000000000000000000000000000000000000000000000000000000000000ba5270d765535b4afaa44f23ab334fcb31c967daba5270d765535b4afaa44f23ab334fcb31c967da0000ffffffff000000000080f01d01a6ef9ea235635e328124ff3429db9f9e91b64e2d0088526a7400000001a6ef9ea235635e328124ff3429db9f9e91b64e2d0088526a740000000000750000000000000000fd7c012704030001012102a0de91740d3d5a3a4a7990ae22315133d02f33716b339ebce88662d012224ef5cc4d4f0104030201012102a0de91740d3d5a3a4a7990ae22315133d02f33716b339ebce88662d012224ef54d25010100000021020000ba5270d765535b4afaa44f23ab334fcb31c967da06627269646765a6ef9ea235635e328124ff3429db9f9e91b64e2dba5270d765535b4afaa44f23ab334fcb31c967da01000000010000000000ba5270d765535b4afaa44f23ab334fcb31c967da80f0310000601de13700000000005039278c04000003a6ef9ea235635e328124ff3429db9f9e91b64e2d3c28dd25a7127ce1b1e9a8dd9fa550a1b805dc10ba5270d765535b4afaa44f23ab334fcb31c967da0356a0fc0155a0fc0155a0fc010300000000000000000000000000000000000000000000000000000300e876481700000000c817a80400000000000000000000000300e876481700000000c817a804000000000000000000000000000000000000a49faec70003f98800750000000000000000b51a0403000101146e4ae35cca122eb65e73abd4c956940ef25a3eabcc4c9604030d0101146e4ae35cca122eb65e73abd4c956940ef25a3eab4c7a01000100ba5270d765535b4afaa44f23ab334fcb31c967da0100000091ccbce2bc71649d2d91bf6384e38d266a1d7fa500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000ffffffff750000000000000000fd23022704030001012102d85f078815b7a52faa92639c3691d2a640e26c4e06de54dd1490f0e93bcc11c3cc4df60104030501012102d85f078815b7a52faa92639c3691d2a640e26c4e06de54dd1490f0e93bcc11c34dcc01028003000091ccbce2bc71649d2d91bf6384e38d266a1d7fa50100030091ccbce2bc71649d2d91bf6384e38d266a1d7fa503a6ef9ea235635e328124ff3429db9f9e91b64e2d3c28dd25a7127ce1b1e9a8dd9fa550a1b805dc10ba5270d765535b4afaa44f23ab334fcb31c967da0356a0fc0155a0fc0155a0fc010300000000000000000000000000000000005039278c04000085fd87f4bf000085fd87f4bf0000000000000000000000000000000000000000000000000000000000000000000300000000000000000000000000000000005039278c04000003000000000000000000000000000000000000000000000000030000000000000000000000000000000000000000000000000347e801000000000048e801000000000048e8010000000000030000000000000000000000000000000000000000000000000300000000000000000000000000000000000000000000000003000000000000000000000000030000000000000000000000000000000000000000000000009d7800000000000000000000000000000000000000000000000000000000000000000000ffffffff000000000000000000000000000000000000000000000000000000000000000000000000000000750000000000000000fdff002704030001012102cbfe54fb371cfc89d35b46cafcad6ac3b7dc9b40546b0f30b2b29a4865ed3b4acc4cd304030c01012102cbfe54fb371cfc89d35b46cafcad6ac3b7dc9b40546b0f30b2b29a4865ed3b4a4caa01004100a6ef9ea235635e328124ff3429db9f9e91b64e2d0000000000000000000000000000000000000000000000000000000000000000ba5270d765535b4afaa44f23ab334fcb31c967da91ccbce2bc71649d2d91bf6384e38d266a1d7fa50000ffffffff000000000080f01d01a6ef9ea235635e328124ff3429db9f9e91b64e2d00e40b540200000001a6ef9ea235635e328124ff3429db9f9e91b64e2d00e40b5402000000000075cbc6f44917000000981a040300010114cb8a0f7f651b484a81e2312c3438deb601e27368cc4c79040308010114cb8a0f7f651b484a81e2312c3438deb601e273684c5d01a6ef9ea235635e328124ff3429db9f9e91b64e2d81f3ced0f02b05a6ef9ea235635e328124ff3429db9f9e91b64e2d809b20041491ccbce2bc71649d2d91bf6384e38d266a1d7fa591ccbce2bc71649d2d91bf6384e38d266a1d7fa575204e000000000000971a040300010114cb8a0f7f651b484a81e2312c3438deb601e27368cc4c78040308010114cb8a0f7f651b484a81e2312c3438deb601e273684c5c013c28dd25a7127ce1b1e9a8dd9fa550a1b805dc10c9c28faf2205a6ef9ea235635e328124ff3429db9f9e91b64e2d809b20041491ccbce2bc71649d2d91bf6384e38d266a1d7fa591ccbce2bc71649d2d91bf6384e38d266a1d7fa5750088526a74000000832704030001012103b99d7cb946c5b1f8a54cde49b8d7e0a2a15a22639feb798009f82b519526c050cc4c5704030b01012103b99d7cb946c5b1f8a54cde49b8d7e0a2a15a22639feb798009f82b519526c0502f01a6ef9ea235635e328124ff3429db9f9e91b64e2d8dc5d1c98f00ba5270d765535b4afaa44f23ab334fcb31c967da7500e40b5402000000822704030001012103b99d7cb946c5b1f8a54cde49b8d7e0a2a15a22639feb798009f82b519526c050cc4c5604030b01012103b99d7cb946c5b1f8a54cde49b8d7e0a2a15a22639feb798009f82b519526c0502e01a6ef9ea235635e328124ff3429db9f9e91b64e2da49faec700ba5270d765535b4afaa44f23ab334fcb31c967da7515f3e09e12000000551b04030001011504ba5270d765535b4afaa44f23ab334fcb31c967dacc3604030901011504ba5270d765535b4afaa44f23ab334fcb31c967da1a013c28dd25a7127ce1b1e9a8dd9fa550a1b805dc1082d9b8f25e7500000000b27800000000000000000000000000
 
 # resulting txid
-ec8ca436fc152b6666765879aa12939e2fdf136d6e5d0dd353aabef752c2022b
+6b56b932421bc3779e1c3dce386ab5015b7302ce8e88c9f145ce9e4d53a471a7
 ```
 
 <h3 id="chaingen-verify">Step 4: Verify currency generation was succesful</h3>
 
 ```
-./verus -chain=vrsctest getcurrency chips
+./verus -chain=vrsctest getcurrency chips10sec
 ```
 
 If successful, output should show similar to the following:
@@ -325,14 +324,14 @@ If successful, output should show similar to the following:
 {
   "version": 1,
   "options": 264,
-  "name": "chips",
-  "currencyid": "i4hY67UdHJcbj4DP2xiMtUZRNhLq4BsbsS",
+  "name": "chips10sec",
+  "currencyid": "iLThsqsgwFRKzRG11j7QaYgNQJ9q16VGpg",
   "parent": "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq",
-  "systemid": "i4hY67UdHJcbj4DP2xiMtUZRNhLq4BsbsS",
+  "systemid": "iLThsqsgwFRKzRG11j7QaYgNQJ9q16VGpg",
   "notarizationprotocol": 1,
   "proofprotocol": 1,
   "launchsystemid": "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq",
-  "startblock": 29959,
+  "startblock": 30897,
   "endblock": 0,
   "currencies": [
     "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq"
@@ -345,7 +344,7 @@ If successful, output should show similar to the following:
   ],
   "preallocations": [
     {
-      "iGTdav42siHgX96ybWn3pRTFxQgiUpZ9K9": 29950000.00000000
+      "iGTdav42siHgX96ybWn3pRTFxQgiUpZ9K9": 20950000.00000000
     }
   ],
   "initialcontributions": [
@@ -366,12 +365,12 @@ If successful, output should show similar to the following:
   "currencyimportfee": 100.00000000,
   "transactionimportfee": 0.01000000,
   "transactionexportfee": 0.01000000,
-  "gatewayconverterid": "iSAExwDHrLYKi5smLAdrygifgsovtf3fVv",
+  "gatewayconverterid": "iGmSgKstjRWTnGcjhytDH4pRpTKuWJzC8x",
   "gatewayconvertername": "bridge",
   "initialtarget": "000000ff0f000000000000000000000000000000000000000000000000000000",
-  "blocktime": 60,
+  "blocktime": 10,
   "powaveragingwindow": 45,
-  "notarizationperiod": 10,
+  "notarizationperiod": 60,
   "eras": [
     {
       "reward": 0,
@@ -380,29 +379,29 @@ If successful, output should show similar to the following:
       "eraend": 0
     }
   ],
-  "currencyidhex": "c1eeedeffdb8be0150af4873155b2b88a9146e0d",
-  "fullyqualifiedname": "chips",
+  "currencyidhex": "da67c931cb4f33ab234fa4fa4a5b5365d77052ba",
+  "fullyqualifiedname": "chips10sec",
   "currencynames": {
     "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq": "VRSCTEST"
   },
-  "definitiontxid": "ec8ca436fc152b6666765879aa12939e2fdf136d6e5d0dd353aabef752c2022b",
+  "definitiontxid": "6b56b932421bc3779e1c3dce386ab5015b7302ce8e88c9f145ce9e4d53a471a7",
   "definitiontxout": 1,
   "nodes": [
     {
-      "networkaddress": "51.222.159.244:12121",
+      "networkaddress": "51.222.159.244:21211",
       "nodeidentity": "i3UXS5QPRQGNRDDqVnyWTnmFCTHDbzmsYk"
     },
     {
-      "networkaddress": "149.56.13.160:12121",
+      "networkaddress": "149.56.13.160:21211",
       "nodeidentity": "i3UXS5QPRQGNRDDqVnyWTnmFCTHDbzmsYk"
     }
   ],
-  "lastconfirmedheight": 29939,
-  "lastconfirmedtxid": "ec8ca436fc152b6666765879aa12939e2fdf136d6e5d0dd353aabef752c2022b",
+  "lastconfirmedheight": 30877,
+  "lastconfirmedtxid": "6b56b932421bc3779e1c3dce386ab5015b7302ce8e88c9f145ce9e4d53a471a7",
   "lastconfirmedcurrencystate": {
     "flags": 2,
     "version": 1,
-    "currencyid": "i4hY67UdHJcbj4DP2xiMtUZRNhLq4BsbsS",
+    "currencyid": "iLThsqsgwFRKzRG11j7QaYgNQJ9q16VGpg",
     "launchcurrencies": [
       {
         "currencyid": "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq",
@@ -413,7 +412,7 @@ If successful, output should show similar to the following:
     ],
     "initialsupply": 0.00000000,
     "emitted": 0.00000000,
-    "supply": 30000000.00000000,
+    "supply": 21000000.00000000,
     "currencies": {
       "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq": {
         "reservein": 0.00000000,
@@ -431,12 +430,12 @@ If successful, output should show similar to the following:
     "primarycurrencyout": 0.00000000,
     "preconvertedout": 0.00000000
   },
-  "bestheight": 29939,
-  "besttxid": "ec8ca436fc152b6666765879aa12939e2fdf136d6e5d0dd353aabef752c2022b",
+  "bestheight": 30877,
+  "besttxid": "6b56b932421bc3779e1c3dce386ab5015b7302ce8e88c9f145ce9e4d53a471a7",
   "bestcurrencystate": {
     "flags": 2,
     "version": 1,
-    "currencyid": "i4hY67UdHJcbj4DP2xiMtUZRNhLq4BsbsS",
+    "currencyid": "iLThsqsgwFRKzRG11j7QaYgNQJ9q16VGpg",
     "launchcurrencies": [
       {
         "currencyid": "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq",
@@ -447,7 +446,7 @@ If successful, output should show similar to the following:
     ],
     "initialsupply": 0.00000000,
     "emitted": 0.00000000,
-    "supply": 30000000.00000000,
+    "supply": 21000000.00000000,
     "currencies": {
       "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq": {
         "reservein": 0.00000000,
@@ -487,35 +486,35 @@ To do this, we must be already mining on `VRSCTEST` in our example.  This can be
 ./verusd -chain=vrsctest -gen -genproclimit=2 -mineraddress=RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph -mint &
 ```
 
-Next, we must spin up our `chips` daemon, and start mining.  We can either: a.) fetch the address generated on wallet initialization, or b.) import our WIF private key from `vrsctest` chain.
+Next, we must spin up our `chips10sec` daemon, and start mining.  We can either: a.) fetch the address generated on wallet initialization, or b.) import our WIF private key from `vrsctest` chain.
 
 ```
-# Start chips daemon
-./verusd -chain=chips &
+# Start chips10sec daemon
+./verusd -chain=chips10sec &
 
 # option a.) Fetch address generated on init
-./verus -chain=chips getaddressesbyaccount ""
+./verus -chain=chips10sec getaddressesbyaccount ""
 
 # option b.) import WIF
-./verus -chain=chips importprivkey <WIF here>
+./verus -chain=chips10sec importprivkey <WIF here>
 ```
 
-Once we've fetched our new address, or imported a known address, we can restart our `chips` daemon to begin merge mining with parent `vrsctest`:
+Once we've fetched our new address, or imported a known address, we can restart our `chips10sec` daemon to begin merge mining with parent `vrsctest`:
 
 ```
-# Stop chips daemon
-./verus -chain=chips stop
+# Stop chips10sec daemon
+./verus -chain=chips10sec stop
 
 # Restart with mining options
-./verusd -chain=chips -gen -genproclimit=2 -mineraddress=RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph -mint &
+./verusd -chain=chips10sec -gen -genproclimit=2 -mineraddress=RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph -mint &
 ```
 
 If successful, you should see output in your terminal:
 
 ```
-Merge mining chips with vrsctest as the hashing chain
+Merge mining chips10sec with vrsctest as the hashing chain
 Found block 2885
-staking reward 0.00010000 chips!
+staking reward 0.00010000 chips10sec!
 POS hash: 00000000007fca5a2624d9276d2ddd7074f68fd32b9f6c81904d96b4a12f6301
 target:   0000000002e3ae00000000000000000000000000000000000000000000000000
 
