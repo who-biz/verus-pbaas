@@ -237,6 +237,10 @@ Defines a separate blockchain for gateway conversions named `bridge.chips10sec`
 
 Specifies that our final 100,000 `chips10sec` supply will be issued through the gateway converter, for a max supply of 21 million coins.
 
+- `"blocktime":10`
+
+Specified that our target block time for difficulty adjustment should be 10 seconds
+
 - `"currencies":["vrsctest","kmd","chips10sec"]`
 
 Specifies a basket of currencies backing our gateway issuance.
