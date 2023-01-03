@@ -15,6 +15,7 @@ This repository is intended to document and inform about the steps required to c
   - [Defining a currency](#chaingen-define)
   - [Verifying currency generation](#chaingen-verify)
 - [Launching a PBaaS Chain](#launch)
+- [Creating Tokens on PBaaS Chain](#token)
 
 ---
 
@@ -531,4 +532,144 @@ Block 2885 added to chain
 
 Similar messages should be seen in `vrsctest` daemon output.  Once the first block is mined, running `vrsctest` daemon at the same time is optional.
 
+---
 
+<h2 id="token">Creating a Token on Chips PBaaS Chain</h2>
+
+After creating our own chain using Verus's PBaaS tooling, we can issue tokens with various properties on our newly launched chain.
+
+This allows us to create IDs on `chips10sec`'s mineable blockchain, and also allows us to create subIDs within the token's namespace. SubIDs have the added benefit of greatly reduced registration costs compared to IDs on the parent chain.
+
+Below, we'll create a token called `cashiers` on the `chips10sec` blockchain. This token is 100% arbitrary, coins should have no real value, and we will only be using it for recording certain game data for Chips.
+
+1. Register name commitment and identity in the same fashion as on `vrsctest` blockchain.  This time we perform the operation on `chips10sec`:
+
+```
+./verus -chain=chips10sec registernamecommitment cashiers RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph
+```
+
+The response should look the same as before, with a different value for "parent":
+
+```
+{
+  "txid": "5308a944b4e5fa7b3f52755312dba248f2b952d243c2a49e78bfd01b3cb55b3a",
+  "namereservation": {
+    "version": 1,
+    "name": "cashiers",
+    "parent": "iLThsqsgwFRKzRG11j7QaYgNQJ9q16VGpg",
+    "salt": "01afedbd3d9ff510192cf4b63381225fe7d5aa1e20daccee190732527c9dde46",
+    "referral": "",
+    "nameid": "i6CS9ewyp4oWozG2eceXPk3uSHg3dihdPg"
+  }
+}
+```
+
+2. Next, register the identity:
+
+```
+./verus -chain=chips10sec registeridentity '{
+  "txid": "5308a944b4e5fa7b3f52755312dba248f2b952d243c2a49e78bfd01b3cb55b3a",
+  "namereservation": {
+    "version": 1,
+    "name": "cashiers",
+    "parent": "iLThsqsgwFRKzRG11j7QaYgNQJ9q16VGpg",
+    "salt": "01afedbd3d9ff510192cf4b63381225fe7d5aa1e20daccee190732527c9dde46",
+    "referral": "",
+    "nameid": "i6CS9ewyp4oWozG2eceXPk3uSHg3dihdPg"
+  }, 
+    "identity":{
+        "name":"cashiers", 
+        "primaryaddresses":["RAaHAuEqo7Ek2WMvEtsRRKg7QjABaJsx9v"], 
+        "minimumsignatures":1, 
+        "privateaddress": ""
+    }
+}'
+```
+
+3. Fund the registered identity with 200 `chips10sec`, and issue a `definecurrency` command:
+
+```
+./verus -chain=chips10sec definecurrency '{"options":32, "name":"cashiers.chips10sec","preallocations":[{"cashiers.chips10sec@":1000000}],"proofprotocol":2}'
+```
+
+The above options should be fairly self-explanatory.  We are creating a token with `options = 32`, and preallocating 1 million tokens to ourselves. `proofprotocol = 2` allows us to generate subIDs within the token's namespace.
+
+Wait for the `startblock` height to be reached on parent chain, and token will be live.
+
+<h3 id="subID">Creating a subID in Token Namespace</h3>
+
+We can register a subID in the same fashion as an upper-level ID, but there are a couple differences in arguments when doing so:
+
+1. Register name commitment *(take note of the extra arguments being passed to command)*:
+
+```
+./verus -chain=chips10sec registernamecommitment test RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph "" "cashiers.chips10sec"
+{
+  "txid": "72b48428e5f19e5e95165f7f3cdd40234264d3cd845f531fb5592c0e7a6fed2a",
+  "namereservation": {
+    "version": 1,
+    "name": "test",
+    "parent": "i6CS9ewyp4oWozG2eceXPk3uSHg3dihdPg",
+    "salt": "6944c4ec9804a08b4bcdcd490fb6f17aedca3ecc6e67d9f92a0277c0f222ed8f",
+    "referral": "",
+    "nameid": "iBiobcQ49xpTuL897iAjkYfosbQLMNpUjH"
+  }
+}
+```
+
+2. Register the subID *(take note that we need to reference token name in `"identity"` object of JSON)*:
+
+```
+./verus -chain=chips10sec registeridentity '{
+  "txid": "72b48428e5f19e5e95165f7f3cdd40234264d3cd845f531fb5592c0e7a6fed2a",
+  "namereservation": {
+    "version": 1,
+    "name": "test",
+    "parent": "i6CS9ewyp4oWozG2eceXPk3uSHg3dihdPg",
+    "salt": "6944c4ec9804a08b4bcdcd490fb6f17aedca3ecc6e67d9f92a0277c0f222ed8f",
+    "referral": "",
+    "nameid": "iBiobcQ49xpTuL897iAjkYfosbQLMNpUjH"
+  }, 
+    "identity":{
+        "name":"test.cashiers", 
+        "primaryaddresses":["RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph"], 
+        "minimumsignatures":1, 
+        "privateaddress": ""
+    }
+}'
+```
+
+3. Verify Creation of our subID:
+
+```
+./verus -chain=chips10sec getidentity test.cashiers.chips10sec@
+{
+  "identity": {
+    "version": 3,
+    "flags": 0,
+    "primaryaddresses": [
+      "RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph"
+    ],
+    "minimumsignatures": 1,
+    "name": "test",
+    "identityaddress": "iBiobcQ49xpTuL897iAjkYfosbQLMNpUjH",
+    "parent": "i6CS9ewyp4oWozG2eceXPk3uSHg3dihdPg",
+    "systemid": "iLThsqsgwFRKzRG11j7QaYgNQJ9q16VGpg",
+    "contentmap": {
+    },
+    "contentmultimap": {
+    },
+    "revocationauthority": "iBiobcQ49xpTuL897iAjkYfosbQLMNpUjH",
+    "recoveryauthority": "iBiobcQ49xpTuL897iAjkYfosbQLMNpUjH",
+    "timelock": 0
+  },
+  "status": "active",
+  "canspendfor": true,
+  "cansignfor": true,
+  "blockheight": 1803,
+  "txid": "002d2c3be9d34ab75a152af6f8bded6af5c985dbb774342826143e9f97c71321",
+  "vout": 0
+}
+```
+
+In addition to lowering identity registration costs, subIDs reduce costs for updating the identity later.  In Chips, we will be using the `contentmultimap` to store various game-related data.  Lower costs at the subID level make this much less expensive.
