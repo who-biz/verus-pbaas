@@ -241,15 +241,15 @@ Specifies that our final 100,000 `chips10sec` supply will be issued through the 
 
 Specified that our target block time for difficulty adjustment should be 10 seconds
 
-- `"currencies":["vrsctest","kmd","chips10sec"]`
+- `"currencies":["vrsctest","kmd","btc","chips10sec"]`
 
 Specifies a basket of currencies backing our gateway issuance.
 
-- `"initialcontributions":[1000,200,0]`
+- `"initialcontributions":[1000,2200,0.025,0]`
 
 Specifies amounts of backing currencies to contribute on launch of gateway from our `chips10sec@` identity address.
 
-- `"initialsupply":2400`
+- `"initialsupply":4000`
 
 
 <h3 id="chaingen-fund">Step 1: Send VRSCTEST, and Basket currencies to identity address</h3>
