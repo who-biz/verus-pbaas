@@ -21,29 +21,20 @@ This repository is intended to document and inform about the steps required to c
 
 <h2 id="compile">Compiling from Source</h2>
 
-<h3>Step 1: Clone, build dependencies:</h3>
+<h3>Step 1: Clone, Chain-build with dependencies:</h3>
 
 ```
 cd ~
 git clone https://github.com/VerusCoin/VerusCoin.git verus
-cd ~/verus/depends
-make -j4
-```
-
-Wait for `depends` to finish building.
-
-<h3>Step 2: Configure build enviroment, and build from source:</h3>
-
-```
 cd ~/verus
-./autogen.sh
-CONFIG_SITE=$PWD/depends/x86_64-unknown-linux-gnu/share/config.site ./configure
-make -j4
+./zcutil/build.sh -j4
 ```
+
+Replace `-j4` with your desired threads, if 4 exceeds your system's resources.
 
 If all steps completed successfully, you should have resulting binaries located in `~/verus/src`.
 
-<h3>Step 3: Launch Verus daemon</h3>
+<h3>Step 2: Launch Verus daemon</h3>
 
 ```
 # Create a new tmux session
@@ -92,7 +83,7 @@ If successful, output should show similar to the following:
     "referral": "",
     "nameid": "iLThsqsgwFRKzRG11j7QaYgNQJ9q16VGpg"
   }
-}  
+}
 ```
 
 <h3>Step 2: Register identity</h3>
