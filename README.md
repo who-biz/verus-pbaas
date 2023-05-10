@@ -205,9 +205,9 @@ Prevents users of `vrsctest` blockchain from preconverting `vrsctest` to `chips1
 
 Specifies the desired conversion ratio for `vrsctest` to `chips10sec`
 
-- `"eras"`
+- `"eras":[{"reward":7770000,"decay":0,"halving":3153600,"eraend":0}]`
 
-Describes reward schedule on new `chips10sec` chain.  We want block subsidies to be zero, so that all emission comes from gateway converter.  Any additional issuance beyond that will be supply-neutral.
+Describes reward schedule on new `chips10sec` chain.  We want block subsidies to be 0.0777, with halvings every 3,153,600 blocks.  Remainder of emission comes from gateway converter.  Any additional issuance beyond that will be supply-neutral.
 
 - `"notaries":["biz@","BizNotary@","BizNotary1@"]`
 
@@ -217,9 +217,9 @@ These notaries will be responsible for notarizing from `chips10sec` to `vrsctest
 
 Seed nodes for new PBaaS chain
 
-- `"preallocations":[{"biz@":20950000}]`
+- `"preallocations":[{"biz@":18650000}]`
 
-Pre-allocated amount from supply of new chain.  In this example, we are pre-allocating 20,950,000 `chips10sec` coins to identity `biz@`.  These can then be re-allocated based on snapshot from legacy CHIPS codebase.
+Pre-allocated amount from supply of new chain.  In this example, we are pre-allocating 18,650,000 `chips10sec` coins to identity `biz@`.  These can then be re-allocated based on snapshot from legacy CHIPS codebase. 2.3M chips will be emitted on `eras` schedule above.
 
 <h4 id="options-gateway">`definecurrency` options for gateway converter</h4>
 
@@ -239,7 +239,7 @@ Specified that our target block time for difficulty adjustment should be 10 seco
 
 Specifies a basket of currencies backing our gateway issuance.
 
-- `"initialcontributions":[1000,2200,0.025,0]`
+- `"initialcontributions":[1100,1430,0.017,0]`
 
 Specifies amounts of backing currencies to contribute on launch of gateway from our `chips10sec@` identity address.
 
