@@ -252,52 +252,71 @@ To generate a PBaaS chain, you will need *at least* a 10,200 VRSCTEST balance in
 
 10,200 VRSCTEST is a base cost (covering 200 VRSCTEST `currencyregistrationfee`, and 10k VRSCTEST `pbaassystemregistrationfee`).  Additional registration costs may be necessary, depending on currency definition specifics.
 
-For this chain, we will be generating both a PBaaS chain (`chips10sec@`), and a gatewayconverter chain (`bridge.chips10sec`).  We will be initially contributing a basket of currencies to the gateway converter.  In example below, we are sending `12000 VRSCTEST` and `200 KMD` to fund the basket.
+For this chain, we will be generating both a PBaaS chain (`chips10sec@`), and a gatewayconverter chain (`bridge.chips10sec`).  We will be initially contributing a basket of currencies to the gateway converter.  In example below, we are sending `1200 VRSCTEST` to `chips10sec@` for funding of basket.  Afterwards, we'll convert 200 VRSCTEST to KMD & BTC via gateway converters, which will be sent to our `chips10sec@` VerusID as well.
 
 ```
-# send vrsctest
-./verus -chain=vrsctest sendtoaddress chips10sec@ 11398
-fb931002be08d1d118bb1e63d77568c16203426c3cb47fe5f1487f9ddbaa0bb3
-
-# send kmd and btc
-verus -chain=vrsctest sendcurrency "*" '[{"address":"chips10sec@","currency":"kmd","amount":2320},{"address":"chips10sec@","currency":"btc","amount":0.028}]'
-opid-3ad87108-4ded-4174-8b5e-7efa04c88471
+# send vrsctest (10200 for registration, 1200 for basket)
+./verus -chain=vrsctest sendtoaddress chips10sec@ 11400
+0208d818859574ba2d54048629776958382e065a02e7feae7be3b3b04f0dd42b
 ```
 
-We also want to verify that the resulting operation ids for `kmd`, `btc` transfers succeeded:
+Now, we should convert some `vrsctest` to `kmd` and `btc` for funding of basket:
 
 ```
-./verus -chain=vrsctest z_getoperationresult '["opid-3ad87108-4ded-4174-8b5e-7efa04c88471"]'
+# convert VRSCTEST to KMD & BTC in one go:
+./src/verus -chain=vrsctest sendcurrency "*" '[{"amount":100,"via":"VRSC-KMD","convertto":"KMD","address":"chips10sec@"},{"amount":100,"via":"VRSC-BTC","convertto":"BTC","address":"chips10sec@"}]'
+opid-1db08a57-9c04-47bc-96be-aaabe860dbef
+```
+
+Check operation status:
+
+```
+./src/verus -chain=vrsctest z_getoperationresult '["opid-1db08a57-9c04-47bc-96be-aaabe860dbef"]'
 [
   {
-    "id": "opid-3ad87108-4ded-4174-8b5e-7efa04c88471",
+    "id": "opid-1db08a57-9c04-47bc-96be-aaabe860dbef",
     "status": "success",
-    "creation_time": 1672755581,
+    "creation_time": 1683745148,
     "result": {
-      "txid": "5c622371ef7587a8de24315e5ea984e421a72d84a2f683e0839e29978005552a"
+      "txid": "d2bc9b56383e1fc48af84ef1cb42f29373391eefca7be767d7585301d9d711bb"
     },
-    "execution_secs": 0.037631555,
+    "execution_secs": 0.072621353,
     "method": "sendcurrency",
     "params": [
       {
-        "address": "chips10sec@",
-        "currency": "kmd",
-        "amount": 2320
+        "amount": 100,
+        "via": "VRSC-KMD",
+        "convertto": "KMD",
+        "address": "chips10sec@"
       },
       {
-        "address": "chips10sec@",
-        "currency": "btc",
-        "amount": 0.028
+        "amount": 100,
+        "via": "VRSC-BTC",
+        "convertto": "BTC",
+        "address": "chips10sec@"
       }
     ]
   }
 ]
 ```
 
+After verifying that `"status": "success"` is present in operationresult above, we need to wait for a notarization to occur before the converted KMD & BTC will show in our Identity's wallet currency balance.
+
+Check this with the following command. Once it shows entries for `VRSCTEST`, `KMD`, and `BTC`, notarization has occurred and funds are free for use.
+
+```
+./src/verus -chain=vrsctest getcurrencybalance "chips10sec@"
+{
+  "VRSCTEST": 11400.00000000,
+  "KMD": 1437.57296112,
+  "BTC": 0.01781147
+}
+```
+
 <h3 id="chaingen-define">Step 2: Define a currency with desired parameters</h3>
 
 ```
-./verus -chain=vrsctest definecurrency '{"name":"chips10sec","options":264,"currencies":["vrsctest"],"maxpreconversion":[0], "conversions":[1],"eras":[{"reward":0,"decay":0,"halving":0,"eraend":0}],"notaries":["biz@","biznotary@","biznotary1@"],"minnotariesconfirm":2,"nodes":[{"networkaddress":"51.222.159.244:12121"},{"networkaddress":"149.56.13.160:12121"}],"preallocations":[{"biz@":20950000}], "gatewayconvertername":"bridge", "gatewayconverterissuance":50000, "blocktime":10}' '{"currencies":["vrsctest","kmd","btc","chips10sec"],"initialcontributions":[1000,2200,0.025,0],"initialsupply":4000}'
+./verus -chain=vrsctest definecurrency '{"name":"chips10sec","options":264,"currencies":["vrsctest"],"maxpreconversion":[0], "conversions":[1],"eras":[{"reward":0,"decay":0,"halving":0,"eraend":0}],"notaries":["biz@","biznotary@","biznotary1@"],"minnotariesconfirm":2,"nodes":[{"networkaddress":"51.222.159.244:12121"},{"networkaddress":"149.56.13.160:12121"}],"preallocations":[{"biz@":20950000}], "gatewayconvertername":"bridge", "gatewayconverterissuance":50000, "blocktime":10}' '{"currencies":["vrsctest","kmd","btc","chips10sec"],"initialcontributions":[1200,1430,0.017,0],"initialsupply":4000}'
 ```
 
 If successful, you should see a very large JSON output in your terminal.  This command does not finish the process of defining a currency.  It simply constructs a transaction, and does not send it to network.
