@@ -65,7 +65,8 @@ Fill in equivalent values for your wallet, desired mining process limits, etc.  
 <h3>Step 1: Register name commitment</h3> 
 
 ```
-./verus -chain=vrsctest registernamecommitment chips10sec RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph
+cd ~/verus
+./src/verus -chain=vrsctest registernamecommitment chips10sec RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph
 ```
 
 You may optionally add other fields such as a referral id.  Help text should be consulted for optional parameters. They will not be covered here.
@@ -74,12 +75,12 @@ If successful, output should show similar to the following:
 
 ```
 {
-  "txid": "f699379469d1ab68c975998a433cc2d1ca5468560f169cb49999a613f37fb936",
+  "txid": "182fd857eb5205d6484e289aeb7c9295c9bd923d48aad4c4a7cc5f7a5cec0bd9",
   "namereservation": {
     "version": 1,
     "name": "chips10sec",
     "parent": "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq",
-    "salt": "0563d62d81d2360a5e3dbb671d1c61d2a4c1069b87e3c4480412b88222de9e86",
+    "salt": "909de66a7d747ac0929d4133ffe71300efa91103b5ba5fe3e3eeee1091951114",
     "referral": "",
     "nameid": "iLThsqsgwFRKzRG11j7QaYgNQJ9q16VGpg"
   }
@@ -92,12 +93,12 @@ Copy and paste the entire resulting JSON object into a `registeridentity` comman
 
 ```
 ./src/verus -chain=vrsctest registeridentity '{
-  "txid": "f699379469d1ab68c975998a433cc2d1ca5468560f169cb49999a613f37fb936",
+  "txid": "182fd857eb5205d6484e289aeb7c9295c9bd923d48aad4c4a7cc5f7a5cec0bd9",
   "namereservation": {
     "version": 1,
     "name": "chips10sec",
     "parent": "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2yq",
-    "salt": "0563d62d81d2360a5e3dbb671d1c61d2a4c1069b87e3c4480412b88222de9e86",
+    "salt": "909de66a7d747ac0929d4133ffe71300efa91103b5ba5fe3e3eeee1091951114",
     "referral": "",
     "nameid": "iLThsqsgwFRKzRG11j7QaYgNQJ9q16VGpg"
   },
@@ -114,7 +115,7 @@ You should modify relevant identity fields to match desired id, control address,
 If successful, output should display a txid:
 
 ```
-94adbc3f221abf626b045806cf8d678fbd46ddd80847428aa9db3d76c839e596
+50203a38cffbb313a290ef5635e8baa9a1e70833d71a7cbaefda8bc708f30c77
 ```
 
 Wait for this transaction to be confirmed.
@@ -125,16 +126,17 @@ Identities can be located by name, or by i-address:
 
 ```
 # By name
-./verus -chain=vrsctest getidentity "chips10sec@"
+./src/verus -chain=vrsctest getidentity "chips10sec@"
 
 # By i-address
-./verus -chain=vrsctest getidentity iLThsqsgwFRKzRG11j7QaYgNQJ9q16VGpg
+./src/verus -chain=vrsctest getidentity iLThsqsgwFRKzRG11j7QaYgNQJ9q16VGpg
 ```
 
 If successful, output should show similar to the following:
 
 ```
 {
+  "fullyqualifiedname": "chips10sec.VRSCTEST@",
   "identity": {
     "version": 3,
     "flags": 0,
@@ -157,8 +159,8 @@ If successful, output should show similar to the following:
   "status": "active",
   "canspendfor": true,
   "cansignfor": true,
-  "blockheight": 39301,
-  "txid": "94adbc3f221abf626b045806cf8d678fbd46ddd80847428aa9db3d76c839e596",
+  "blockheight": 25932,
+  "txid": "50203a38cffbb313a290ef5635e8baa9a1e70833d71a7cbaefda8bc708f30c77",
   "vout": 0
 }
 ```
