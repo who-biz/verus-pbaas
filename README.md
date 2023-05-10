@@ -316,7 +316,7 @@ Check this with the following command. Once it shows entries for `VRSCTEST`, `KM
 <h3 id="chaingen-define">Step 2: Define a currency with desired parameters</h3>
 
 ```
-./src/verus -chain=vrsctest definecurrency '{"name":"chips10sec","options":264,"currencies":["vrsctest"],"maxpreconversion":[0], "conversions":[1],"eras":[{"reward":7770000,"decay":0,"halving":3153600,"eraend":0}],"notaries":["biz@","biznotary@","biznotary1@"],"startblock":26000,"minnotariesconfirm":2,"nodes":[{"networkaddress":"51.222.159.244:12121"},{"networkaddress":"149.56.13.160:12121"}],"preallocations":[{"biz@":20950000}], "gatewayconvertername":"bridge", "gatewayconverterissuance":50000, "blocktime":10}' '{"currencies":["vrsctest","kmd","btc","chips10sec"],"initialcontributions":[1100,1430,0.017,0],"initialsupply":4000}'
+./src/verus -chain=vrsctest definecurrency '{"name":"chips10sec","options":264,"currencies":["vrsctest"],"maxpreconversion":[0], "conversions":[1],"eras":[{"reward":7770000,"decay":0,"halving":3153600,"eraend":0}],"notaries":["biz@","biznotary@","biznotary1@"],"minnotariesconfirm":2,"nodes":[{"networkaddress":"51.222.159.244:12121"},{"networkaddress":"149.56.13.160:12121"}],"preallocations":[{"biz@":18650000}], "gatewayconvertername":"bridge", "gatewayconverterissuance":50000, "blocktime":10}' '{"currencies":["vrsctest","kmd","btc","chips10sec"],"initialcontributions":[1200,1430,0.017,0],"initialsupply":4000}'
 ```
 
 If successful, you should see a very large JSON output in your terminal.  This command does not finish the process of defining a currency.  It simply constructs a transaction, and does not send it to network.
