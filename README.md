@@ -110,7 +110,7 @@ Copy and paste the entire resulting JSON object into a `registeridentity` comman
     }
 }'
 ```
-You should modify relevant identity fields to match desired id, control address, minsigs, and optionally a private address.
+You should modify relevant identity fields to match desired id, primary address, minsigs, and optionally a private address.
 
 If successful, output should display a txid:
 
@@ -316,7 +316,7 @@ Check this with the following command. Once it shows entries for `VRSCTEST`, `KM
 <h3 id="chaingen-define">Step 2: Define a currency with desired parameters</h3>
 
 ```
-./src/verus -chain=vrsctest definecurrency '{"name":"chips10sec","options":264,"currencies":["vrsctest"],"maxpreconversion":[0], "conversions":[1],"eras":[{"reward":7770000,"decay":0,"halving":3153600,"eraend":0}],"notaries":["biz@","biznotary@","biznotary1@"],"minnotariesconfirm":2,"nodes":[{"networkaddress":"51.222.159.244:12121"},{"networkaddress":"149.56.13.160:12121"}],"preallocations":[{"biz@":18650000}], "gatewayconvertername":"bridge", "gatewayconverterissuance":50000, "blocktime":10}' '{"currencies":["vrsctest","kmd","btc","chips10sec"],"initialcontributions":[1200,1430,0.017,0],"initialsupply":4000}'
+./src/verus -chain=vrsctest definecurrency '{"name":"chips10sec","options":264,"currencies":["vrsctest"],"maxpreconversion":[0], "conversions":[1],"eras":[{"reward":7770000,"decay":0,"halving":3153600,"eraend":0}],"notaries":["biz@","chipsnotary@","chipsnotary1@"],"minnotariesconfirm":2,"nodes":[{"networkaddress":"51.222.159.244:12121"},{"networkaddress":"149.56.13.160:12121"}],"preallocations":[{"biz@":20459930}], "gatewayconvertername":"bridge", "gatewayconverterissuance":50000, "blocktime":10}' '{"currencies":["vrsctest","kmd","btc","chips10sec"],"initialcontributions":[1200,1430,0.017,0],"initialsupply":4000}'
 ```
 
 If successful, you should see a very large JSON output in your terminal.  This command does not finish the process of defining a currency.  It simply constructs a transaction, and does not send it to network.
@@ -564,12 +564,12 @@ The response should look the same as before, with a different value for "parent"
 
 ```
 {
-  "txid": "5308a944b4e5fa7b3f52755312dba248f2b952d243c2a49e78bfd01b3cb55b3a",
+  "txid": "007d80c218df11f8ee2b62963fdff5304383f4271674e781aa0962a81accae9d",
   "namereservation": {
     "version": 1,
     "name": "cashiers",
     "parent": "iLThsqsgwFRKzRG11j7QaYgNQJ9q16VGpg",
-    "salt": "01afedbd3d9ff510192cf4b63381225fe7d5aa1e20daccee190732527c9dde46",
+    "salt": "09efdd011639e1287f875004d00f62f07fd0f37c9ee811ae5bf1ac949b692347",
     "referral": "",
     "nameid": "i6CS9ewyp4oWozG2eceXPk3uSHg3dihdPg"
   }
@@ -580,19 +580,19 @@ The response should look the same as before, with a different value for "parent"
 
 ```
 ./verus -chain=chips10sec registeridentity '{
-  "txid": "5308a944b4e5fa7b3f52755312dba248f2b952d243c2a49e78bfd01b3cb55b3a",
+  "txid": "007d80c218df11f8ee2b62963fdff5304383f4271674e781aa0962a81accae9d",
   "namereservation": {
     "version": 1,
     "name": "cashiers",
     "parent": "iLThsqsgwFRKzRG11j7QaYgNQJ9q16VGpg",
-    "salt": "01afedbd3d9ff510192cf4b63381225fe7d5aa1e20daccee190732527c9dde46",
+    "salt": "09efdd011639e1287f875004d00f62f07fd0f37c9ee811ae5bf1ac949b692347",
     "referral": "",
     "nameid": "i6CS9ewyp4oWozG2eceXPk3uSHg3dihdPg"
-  }, 
+  },
     "identity":{
-        "name":"cashiers", 
-        "primaryaddresses":["RAaHAuEqo7Ek2WMvEtsRRKg7QjABaJsx9v"], 
-        "minimumsignatures":1, 
+        "name":"cashiers",
+        "primaryaddresses":["RAaHAuEqo7Ek2WMvEtsRRKg7QjABaJsx9v","RGa9Wyuw11sUJKFomWXA76EHps2heLUeni"],
+        "minimumsignatures":1,
         "privateaddress": ""
     }
 }'
@@ -601,7 +601,13 @@ The response should look the same as before, with a different value for "parent"
 3. Fund the registered identity with 200 `chips10sec`, and issue a `definecurrency` command:
 
 ```
-./verus -chain=chips10sec definecurrency '{"options":32, "name":"cashiers.chips10sec","preallocations":[{"cashiers.chips10sec@":1000000}],"proofprotocol":2}'
+./verus -chain=chips10sec definecurrency '{"options":32, "name":"cashiers.chips10sec","preallocations":[{"biz.chips10sec@":500000},{"sg777.chips10sec@":500000],"proofprotocol":2}'
+```
+
+4. Send resulting `hex` output to network via `sendrawtransaction`:
+
+```
+./verus -chain=chips10sec sendrawtransaction 0400008085202f8902822f0fb0d68b7164b494be62add593d7928dfbf033407d5032b56737e81c2e9400000000694c67010101012103c730f2aa62320a564fedcbef764a08b23c361034527e6f916ce81cf0492593ce401becedc22667a74d18fd7b94d78b3b9d8c72c540f41063383f2892ab790675314b2423dd2ccb9f73e04a5010364f3b9d0e8eaabdc68825eea9a16686f9c8c783ffffffffcb6b767cc7fb3b240fa9dcf5ea068b903b2853cc66c8c06563a9e978bfba551501000000694c67010101012103c730f2aa62320a564fedcbef764a08b23c361034527e6f916ce81cf0492593ce4081eade46e23b1f55e45181bce224195237eb7b74e85b831d810ed6ad32b13ef818d72ff11fa1d54a4bb6c00628a6d20473033dd168c857eaf16f2dd33aa66818ffffffff070000000000000000fd380147040300010315041ddd4fd3dab727f3e385ebb57aa422387d27880c15041ddd4fd3dab727f3e385ebb57aa422387d27880c15041ddd4fd3dab727f3e385ebb57aa422387d27880ccc4cec04030e010115041ddd4fd3dab727f3e385ebb57aa422387d27880c4c97030000000100000002140e3372cc819a309e75eb17ce41ca6183547ee41a144ffdd0678195bd28d31bf61be707f623601ac38a01000000ba5270d765535b4afaa44f23ab334fcb31c967da08636173686965727300001ddd4fd3dab727f3e385ebb57aa422387d27880c1ddd4fd3dab727f3e385ebb57aa422387d27880c00ba5270d765535b4afaa44f23ab334fcb31c967da000000001b04030f010115041ddd4fd3dab727f3e385ebb57aa422387d27880c1b040310010115041ddd4fd3dab727f3e385ebb57aa422387d27880c750000000000000000fd23012704030001012102a0de91740d3d5a3a4a7990ae22315133d02f33716b339ebce88662d012224ef5cc4cf704030201012102a0de91740d3d5a3a4a7990ae22315133d02f33716b339ebce88662d012224ef54cce0100000020000000ba5270d765535b4afaa44f23ab334fcb31c967da086361736869657273ba5270d765535b4afaa44f23ab334fcb31c967daba5270d765535b4afaa44f23ab334fcb31c967da010000000200000000000000000000000000000000000000000000000000c253000000000000000000029970927aab8ffcd56a6783eb1757365c300fdb9800203d88792d00007ff7704e0aeef2d7fac6a0efa184cd21622f403300203d88792d000000000000000000000000000000000000000000000000a49faec70003f98800750000000000000000b51a0403000101146e4ae35cca122eb65e73abd4c956940ef25a3eabcc4c9604030d0101146e4ae35cca122eb65e73abd4c956940ef25a3eab4c7a01000900ba5270d765535b4afaa44f23ab334fcb31c967dabf2100001ddd4fd3dab727f3e385ebb57aa422387d27880c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004000000750000000000000000fd09012704030001012102d85f078815b7a52faa92639c3691d2a640e26c4e06de54dd1490f0e93bcc11c3cc4cdd04030501012102d85f078815b7a52faa92639c3691d2a640e26c4e06de54dd1490f0e93bcc11c34cb402800300001ddd4fd3dab727f3e385ebb57aa422387d27880c010002001ddd4fd3dab727f3e385ebb57aa422387d27880c000000000095ddb082e7ff0000000000000000000000000000000000000000000000000000000000000000000000000000000000bf2100000000000000000000000000000000000000000000000000000000000000000000ffffffff000000000000000000000000000000000000000000000000000000000000000000000000000000750000000000000000fdfe002704030001012102cbfe54fb371cfc89d35b46cafcad6ac3b7dc9b40546b0f30b2b29a4865ed3b4acc4cd204030c01012102cbfe54fb371cfc89d35b46cafcad6ac3b7dc9b40546b0f30b2b29a4865ed3b4a4ca901004100ba5270d765535b4afaa44f23ab334fcb31c967da0000000000000000000000000000000000000000000000000000000000000000ba5270d765535b4afaa44f23ab334fcb31c967da1ddd4fd3dab727f3e385ebb57aa422387d27880c0000ffffffff0000000000c23f01ba5270d765535b4afaa44f23ab334fcb31c967da00e40b540200000001ba5270d765535b4afaa44f23ab334fcb31c967da00e40b540200000000007500e40b5402000000822704030001012103b99d7cb946c5b1f8a54cde49b8d7e0a2a15a22639feb798009f82b519526c050cc4c5604030b01012103b99d7cb946c5b1f8a54cde49b8d7e0a2a15a22639feb798009f82b519526c0502e01ba5270d765535b4afaa44f23ab334fcb31c967daa49faec7001ddd4fd3dab727f3e385ebb57aa422387d27880c7500ca9a3b0000000024050403000000cc1b040300010115041ddd4fd3dab727f3e385ebb57aa422387d27880c7500000000d42100000000000000000000000000
 ```
 
 The above options should be fairly self-explanatory.  We are creating a token with `options = 32`, and preallocating 1 million tokens to ourselves. `proofprotocol = 2` allows us to generate subIDs within the token's namespace.
