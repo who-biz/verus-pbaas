@@ -616,21 +616,23 @@ Wait for the `startblock` height to be reached on parent chain, and token will b
 
 <h3 id="subID">Creating a subID in Token Namespace</h3>
 
+**Note that for subID creation, you will need 0.02 CHIPS, and 100 of parent token (i.e. `poker.chips10sec`)**, unless ID registration cost was manually changed.
+
 We can register a subID in the same fashion as an upper-level ID, but there are a couple differences in arguments when doing so:
 
 1. Register name commitment *(take note of the extra arguments being passed to command)*:
 
 ```
-./verus -chain=chips10sec -testnet registernamecommitment test RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph "" "poker.chips10sec"
+./verus -chain=chips10sec -testnet registernamecommitment test RAaHAuEqo7Ek2WMvEtsRRKg7QjABaJsx9v "" "poker.chips10sec"
 {
-  "txid": "72b48428e5f19e5e95165f7f3cdd40234264d3cd845f531fb5592c0e7a6fed2a",
+  "txid": "3a3fb2e1e0f52635e3f50cb25e3d0b18fb38e75cda5e338389a42d59e29d4111",
   "namereservation": {
     "version": 1,
     "name": "test",
-    "parent": "i6CS9ewyp4oWozG2eceXPk3uSHg3dihdPg",
-    "salt": "6944c4ec9804a08b4bcdcd490fb6f17aedca3ecc6e67d9f92a0277c0f222ed8f",
+    "parent": "i6gViGxt7YinkJZoubKdbWBrqdRCb1Rkvs",
+    "salt": "abc21a3e0f60966ae526db388c4b8fb53b9c25c378e4fdad2666d17d73cbd2bb",
     "referral": "",
-    "nameid": "iBiobcQ49xpTuL897iAjkYfosbQLMNpUjH"
+    "nameid": "i7YbWFramcp6JAJhKKuLtGfjLdwQmHo82n"
   }
 }
 ```
@@ -639,21 +641,21 @@ We can register a subID in the same fashion as an upper-level ID, but there are 
 
 ```
 ./verus -chain=chips10sec -testnet registeridentity '{
-  "txid": "72b48428e5f19e5e95165f7f3cdd40234264d3cd845f531fb5592c0e7a6fed2a",
+  "txid": "3a3fb2e1e0f52635e3f50cb25e3d0b18fb38e75cda5e338389a42d59e29d4111",
   "namereservation": {
     "version": 1,
     "name": "test",
-    "parent": "i6CS9ewyp4oWozG2eceXPk3uSHg3dihdPg",
-    "salt": "6944c4ec9804a08b4bcdcd490fb6f17aedca3ecc6e67d9f92a0277c0f222ed8f",
+    "parent": "i6gViGxt7YinkJZoubKdbWBrqdRCb1Rkvs",
+    "salt": "abc21a3e0f60966ae526db388c4b8fb53b9c25c378e4fdad2666d17d73cbd2bb",
     "referral": "",
-    "nameid": "iBiobcQ49xpTuL897iAjkYfosbQLMNpUjH"
-  }, 
-    "identity":{
-        "name":"test.poker", 
-        "primaryaddresses":["RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph"], 
-        "minimumsignatures":1, 
+    "nameid": "i7YbWFramcp6JAJhKKuLtGfjLdwQmHo82n"
+  },
+  "identity": {
+     "name":"test.poker",
+     "primaryaddresses":["RAaHAuEqo7Ek2WMvEtsRRKg7QjABaJsx9v"],
+     "minimumsignatures":1,
         "privateaddress": ""
-    }
+  }
 }'
 ```
 
