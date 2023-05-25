@@ -511,23 +511,23 @@ Next, we must spin up our `chips10sec` daemon, and start mining.  We can either:
 
 ```
 # Start chips10sec daemon
-./verusd -chain=chips10sec &
+./verusd -chain=chips10sec -testnet &
 
 # option a.) Fetch address generated on init
-./verus -chain=chips10sec getaddressesbyaccount ""
+./verus -chain=chips10sec -testnet getaddressesbyaccount ""
 
 # option b.) import WIF
-./verus -chain=chips10sec importprivkey <WIF here>
+./verus -chain=chips10sec -testnet importprivkey <WIF here>
 ```
 
 Once we've fetched our new address, or imported a known address, we can restart our `chips10sec` daemon to begin merge mining with parent `vrsctest`:
 
 ```
 # Stop chips10sec daemon
-./verus -chain=chips10sec stop
+./verus -chain=chips10sec -testnet stop
 
 # Restart with mining options
-./verusd -chain=chips10sec -gen -genproclimit=2 -mineraddress=RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph -mint &
+./verusd -chain=chips10sec -testnet -gen -genproclimit=2 -mineraddress=RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph -mint &
 ```
 
 If successful, you should see output in your terminal:
@@ -552,26 +552,26 @@ After creating our own chain using Verus's PBaaS tooling, we can issue tokens wi
 
 This allows us to create IDs on `chips10sec`'s mineable blockchain, and also allows us to create subIDs within the token's namespace. SubIDs have the added benefit of greatly reduced registration costs compared to IDs on the parent chain.
 
-Below, we'll create a token called `cashiers` on the `chips10sec` blockchain. This token is 100% arbitrary, coins should have no real value, and we will only be using it for recording certain game data for Chips.
+Below, we'll create a token called `poker` on the `chips10sec` blockchain. This token is 100% arbitrary, coins should have no real value, and we will only be using it for recording certain game data for Chips.
 
 1. Register name commitment and identity in the same fashion as on `vrsctest` blockchain.  This time we perform the operation on `chips10sec`:
 
 ```
-./verus -chain=chips10sec registernamecommitment cashiers RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph
+./verus -chain=chips10sec -testnet registernamecommitment poker RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph
 ```
 
 The response should look the same as before, with a different value for "parent":
 
 ```
 {
-  "txid": "007d80c218df11f8ee2b62963fdff5304383f4271674e781aa0962a81accae9d",
+  "txid": "20514cc5ee44e3657307e150d83630fb664f20565c7bd1446cb871db08981bb3",
   "namereservation": {
     "version": 1,
-    "name": "cashiers",
+    "name": "poker",
     "parent": "iLThsqsgwFRKzRG11j7QaYgNQJ9q16VGpg",
-    "salt": "09efdd011639e1287f875004d00f62f07fd0f37c9ee811ae5bf1ac949b692347",
+    "salt": "263d3ce1b68ba5259247052b09f2687a3ade9b204369b9231baca3eb4a61e0bb",
     "referral": "",
-    "nameid": "i6CS9ewyp4oWozG2eceXPk3uSHg3dihdPg"
+    "nameid": "i6gViGxt7YinkJZoubKdbWBrqdRCb1Rkvs"
   }
 }
 ```
@@ -579,35 +579,35 @@ The response should look the same as before, with a different value for "parent"
 2. Next, register the identity:
 
 ```
-./verus -chain=chips10sec registeridentity '{
-  "txid": "007d80c218df11f8ee2b62963fdff5304383f4271674e781aa0962a81accae9d",
+./verus -chain=chips10sec -testnet registeridentity '{
+  "txid": "20514cc5ee44e3657307e150d83630fb664f20565c7bd1446cb871db08981bb3",
   "namereservation": {
     "version": 1,
-    "name": "cashiers",
+    "name": "poker",
     "parent": "iLThsqsgwFRKzRG11j7QaYgNQJ9q16VGpg",
-    "salt": "09efdd011639e1287f875004d00f62f07fd0f37c9ee811ae5bf1ac949b692347",
+    "salt": "263d3ce1b68ba5259247052b09f2687a3ade9b204369b9231baca3eb4a61e0bb",
     "referral": "",
-    "nameid": "i6CS9ewyp4oWozG2eceXPk3uSHg3dihdPg"
+    "nameid": "i6gViGxt7YinkJZoubKdbWBrqdRCb1Rkvs"
   },
-    "identity":{
-        "name":"cashiers",
-        "primaryaddresses":["RAaHAuEqo7Ek2WMvEtsRRKg7QjABaJsx9v","RGa9Wyuw11sUJKFomWXA76EHps2heLUeni"],
-        "minimumsignatures":1,
-        "privateaddress": ""
-    }
+  "identity": {
+     "name":"poker",
+     "primaryaddresses":["RAaHAuEqo7Ek2WMvEtsRRKg7QjABaJsx9v","RGa9Wyuw11sUJKFomWXA76EHps2heLUeni"],
+     "minimumsignatures":1,
+     "privateaddress": ""
+  }
 }'
 ```
 
 3. Fund the registered identity with 200 `chips10sec`, and issue a `definecurrency` command:
 
 ```
-./verus -chain=chips10sec definecurrency '{"options":32, "name":"cashiers.chips10sec","preallocations":[{"biz.chips10sec@":500000},{"sg777.chips10sec@":500000],"proofprotocol":2}'
+./verus -chain=chips10sec -testnet definecurrency '{"options":32, "name":"poker.chips10sec","preallocations":[{"biz.chips10sec@":500000},{"sg777.chips10sec@":500000}],"proofprotocol":2}'
 ```
 
 4. Send resulting `hex` output to network via `sendrawtransaction`:
 
 ```
-./verus -chain=chips10sec sendrawtransaction 0400008085202f8902822f0fb0d68b7164b494be62add593d7928dfbf033407d5032b56737e81c2e9400000000694c67010101012103c730f2aa62320a564fedcbef764a08b23c361034527e6f916ce81cf0492593ce401becedc22667a74d18fd7b94d78b3b9d8c72c540f41063383f2892ab790675314b2423dd2ccb9f73e04a5010364f3b9d0e8eaabdc68825eea9a16686f9c8c783ffffffffcb6b767cc7fb3b240fa9dcf5ea068b903b2853cc66c8c06563a9e978bfba551501000000694c67010101012103c730f2aa62320a564fedcbef764a08b23c361034527e6f916ce81cf0492593ce4081eade46e23b1f55e45181bce224195237eb7b74e85b831d810ed6ad32b13ef818d72ff11fa1d54a4bb6c00628a6d20473033dd168c857eaf16f2dd33aa66818ffffffff070000000000000000fd380147040300010315041ddd4fd3dab727f3e385ebb57aa422387d27880c15041ddd4fd3dab727f3e385ebb57aa422387d27880c15041ddd4fd3dab727f3e385ebb57aa422387d27880ccc4cec04030e010115041ddd4fd3dab727f3e385ebb57aa422387d27880c4c97030000000100000002140e3372cc819a309e75eb17ce41ca6183547ee41a144ffdd0678195bd28d31bf61be707f623601ac38a01000000ba5270d765535b4afaa44f23ab334fcb31c967da08636173686965727300001ddd4fd3dab727f3e385ebb57aa422387d27880c1ddd4fd3dab727f3e385ebb57aa422387d27880c00ba5270d765535b4afaa44f23ab334fcb31c967da000000001b04030f010115041ddd4fd3dab727f3e385ebb57aa422387d27880c1b040310010115041ddd4fd3dab727f3e385ebb57aa422387d27880c750000000000000000fd23012704030001012102a0de91740d3d5a3a4a7990ae22315133d02f33716b339ebce88662d012224ef5cc4cf704030201012102a0de91740d3d5a3a4a7990ae22315133d02f33716b339ebce88662d012224ef54cce0100000020000000ba5270d765535b4afaa44f23ab334fcb31c967da086361736869657273ba5270d765535b4afaa44f23ab334fcb31c967daba5270d765535b4afaa44f23ab334fcb31c967da010000000200000000000000000000000000000000000000000000000000c253000000000000000000029970927aab8ffcd56a6783eb1757365c300fdb9800203d88792d00007ff7704e0aeef2d7fac6a0efa184cd21622f403300203d88792d000000000000000000000000000000000000000000000000a49faec70003f98800750000000000000000b51a0403000101146e4ae35cca122eb65e73abd4c956940ef25a3eabcc4c9604030d0101146e4ae35cca122eb65e73abd4c956940ef25a3eab4c7a01000900ba5270d765535b4afaa44f23ab334fcb31c967dabf2100001ddd4fd3dab727f3e385ebb57aa422387d27880c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004000000750000000000000000fd09012704030001012102d85f078815b7a52faa92639c3691d2a640e26c4e06de54dd1490f0e93bcc11c3cc4cdd04030501012102d85f078815b7a52faa92639c3691d2a640e26c4e06de54dd1490f0e93bcc11c34cb402800300001ddd4fd3dab727f3e385ebb57aa422387d27880c010002001ddd4fd3dab727f3e385ebb57aa422387d27880c000000000095ddb082e7ff0000000000000000000000000000000000000000000000000000000000000000000000000000000000bf2100000000000000000000000000000000000000000000000000000000000000000000ffffffff000000000000000000000000000000000000000000000000000000000000000000000000000000750000000000000000fdfe002704030001012102cbfe54fb371cfc89d35b46cafcad6ac3b7dc9b40546b0f30b2b29a4865ed3b4acc4cd204030c01012102cbfe54fb371cfc89d35b46cafcad6ac3b7dc9b40546b0f30b2b29a4865ed3b4a4ca901004100ba5270d765535b4afaa44f23ab334fcb31c967da0000000000000000000000000000000000000000000000000000000000000000ba5270d765535b4afaa44f23ab334fcb31c967da1ddd4fd3dab727f3e385ebb57aa422387d27880c0000ffffffff0000000000c23f01ba5270d765535b4afaa44f23ab334fcb31c967da00e40b540200000001ba5270d765535b4afaa44f23ab334fcb31c967da00e40b540200000000007500e40b5402000000822704030001012103b99d7cb946c5b1f8a54cde49b8d7e0a2a15a22639feb798009f82b519526c050cc4c5604030b01012103b99d7cb946c5b1f8a54cde49b8d7e0a2a15a22639feb798009f82b519526c0502e01ba5270d765535b4afaa44f23ab334fcb31c967daa49faec7001ddd4fd3dab727f3e385ebb57aa422387d27880c7500ca9a3b0000000024050403000000cc1b040300010115041ddd4fd3dab727f3e385ebb57aa422387d27880c7500000000d42100000000000000000000000000
+./verus -chain=chips10sec -testnet sendrawtransaction 0400008085202f89022174b8680f19ba3e1b100903387a5bd63357bf639c187ce46fdeb7e68c69fa1500000000694c67010101012103c730f2aa62320a564fedcbef764a08b23c361034527e6f916ce81cf0492593ce400861ec9b8e960acaeb1ebbd02dcb87ee510f943cef5b0006762bb47e942c04cf408aa444f3ee2c40e2e577d2c4f8d17d15e24b90a440761d611c0b428765c183fffffffffa34dd50ca52c42f2cc5a8bc3f3fcff3b4c236eae601f5b37f76b504198dc4d601000000694c67010101012103c730f2aa62320a564fedcbef764a08b23c361034527e6f916ce81cf0492593ce409e31a7bcba53a4d12f8f1adc57254424a0228da51ee82904f9d2564dbe497edd5cc5d950e159c4a10b056ba2ea8ea4f9c8ad72957c966330531ae848a0cfd875ffffffff070000000000000000fd35014704030001031504232beeb9dd0ccce6951d2d89966bf161166403491504232beeb9dd0ccce6951d2d89966bf161166403491504232beeb9dd0ccce6951d2d89966bf16116640349cc4ce904030e01011504232beeb9dd0ccce6951d2d89966bf161166403494c94030000000100000002140e3372cc819a309e75eb17ce41ca6183547ee41a144ffdd0678195bd28d31bf61be707f623601ac38a01000000ba5270d765535b4afaa44f23ab334fcb31c967da05706f6b65720000232beeb9dd0ccce6951d2d89966bf16116640349232beeb9dd0ccce6951d2d89966bf1611664034900ba5270d765535b4afaa44f23ab334fcb31c967da000000001b04030f01011504232beeb9dd0ccce6951d2d89966bf161166403491b04031001011504232beeb9dd0ccce6951d2d89966bf16116640349750000000000000000fd21012704030001012102a0de91740d3d5a3a4a7990ae22315133d02f33716b339ebce88662d012224ef5cc4cf504030201012102a0de91740d3d5a3a4a7990ae22315133d02f33716b339ebce88662d012224ef54ccc0100000020000000ba5270d765535b4afaa44f23ab334fcb31c967da05706f6b6572ba5270d765535b4afaa44f23ab334fcb31c967daba5270d765535b4afaa44f23ab334fcb31c967da01000000020000000000000000000000000000000000000000000000000086862b000000000000000000029970927aab8ffcd56a6783eb1757365c300fdb9800203d88792d00007ff7704e0aeef2d7fac6a0efa184cd21622f403300203d88792d000000000000000000000000000000000000000000000000a49faec70003f98800750000000000000000b51a0403000101146e4ae35cca122eb65e73abd4c956940ef25a3eabcc4c9604030d0101146e4ae35cca122eb65e73abd4c956940ef25a3eab4c7a01000900ba5270d765535b4afaa44f23ab334fcb31c967da97c30100232beeb9dd0ccce6951d2d89966bf161166403490000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004000000750000000000000000fd09012704030001012102d85f078815b7a52faa92639c3691d2a640e26c4e06de54dd1490f0e93bcc11c3cc4cdd04030501012102d85f078815b7a52faa92639c3691d2a640e26c4e06de54dd1490f0e93bcc11c34cb40280030000232beeb9dd0ccce6951d2d89966bf1611664034901000200232beeb9dd0ccce6951d2d89966bf16116640349000000000095ddb082e7ff000000000000000000000000000000000000000000000000000000000000000000000000000000000097c301000000000000000000000000000000000000000000000000000000000000000000ffffffff000000000000000000000000000000000000000000000000000000000000000000000000000000750000000000000000fdff002704030001012102cbfe54fb371cfc89d35b46cafcad6ac3b7dc9b40546b0f30b2b29a4865ed3b4acc4cd304030c01012102cbfe54fb371cfc89d35b46cafcad6ac3b7dc9b40546b0f30b2b29a4865ed3b4a4caa01004100ba5270d765535b4afaa44f23ab334fcb31c967da0000000000000000000000000000000000000000000000000000000000000000ba5270d765535b4afaa44f23ab334fcb31c967da232beeb9dd0ccce6951d2d89966bf161166403490000ffffffff000000000086861701ba5270d765535b4afaa44f23ab334fcb31c967da00e40b540200000001ba5270d765535b4afaa44f23ab334fcb31c967da00e40b540200000000007500e40b5402000000822704030001012103b99d7cb946c5b1f8a54cde49b8d7e0a2a15a22639feb798009f82b519526c050cc4c5604030b01012103b99d7cb946c5b1f8a54cde49b8d7e0a2a15a22639feb798009f82b519526c0502e01ba5270d765535b4afaa44f23ab334fcb31c967daa49faec700232beeb9dd0ccce6951d2d89966bf161166403497500e1f5050000000024050403000000cc1b04030001011504232beeb9dd0ccce6951d2d89966bf161166403497500000000acc301000000000000000000000000
 ```
 
 The above options should be fairly self-explanatory.  We are creating a token with `options = 32`, and preallocating 1 million tokens to ourselves. `proofprotocol = 2` allows us to generate subIDs within the token's namespace.
@@ -621,7 +621,7 @@ We can register a subID in the same fashion as an upper-level ID, but there are 
 1. Register name commitment *(take note of the extra arguments being passed to command)*:
 
 ```
-./verus -chain=chips10sec registernamecommitment test RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph "" "cashiers.chips10sec"
+./verus -chain=chips10sec -testnet registernamecommitment test RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph "" "poker.chips10sec"
 {
   "txid": "72b48428e5f19e5e95165f7f3cdd40234264d3cd845f531fb5592c0e7a6fed2a",
   "namereservation": {
@@ -638,7 +638,7 @@ We can register a subID in the same fashion as an upper-level ID, but there are 
 2. Register the subID *(take note that we need to reference token name in `"identity"` object of JSON)*:
 
 ```
-./verus -chain=chips10sec registeridentity '{
+./verus -chain=chips10sec -testnet registeridentity '{
   "txid": "72b48428e5f19e5e95165f7f3cdd40234264d3cd845f531fb5592c0e7a6fed2a",
   "namereservation": {
     "version": 1,
@@ -649,7 +649,7 @@ We can register a subID in the same fashion as an upper-level ID, but there are 
     "nameid": "iBiobcQ49xpTuL897iAjkYfosbQLMNpUjH"
   }, 
     "identity":{
-        "name":"test.cashiers", 
+        "name":"test.poker", 
         "primaryaddresses":["RYQbUr9WtRRAnMjuddZGryrNEpFEV1h8ph"], 
         "minimumsignatures":1, 
         "privateaddress": ""
@@ -660,7 +660,7 @@ We can register a subID in the same fashion as an upper-level ID, but there are 
 3. Verify Creation of our subID:
 
 ```
-./verus -chain=chips10sec getidentity test.cashiers.chips10sec@
+./verus -chain=chips10sec -testnet getidentity test.poker.chips10sec@
 {
   "identity": {
     "version": 3,
